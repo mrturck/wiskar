@@ -1,4 +1,4 @@
-# wordAR
+# wiskar
 Bridging the gap between the worlds of augmented reality and modern web development.
 
 <p>A simple augmented reality demo local weather data.<img src="weatherSimpleAR.gif"><br><br>

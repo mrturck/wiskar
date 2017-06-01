@@ -1,8 +1,8 @@
 # wiskar
 Bridging the gap between the worlds of augmented reality and modern web development.
 
-NEW: An augmented reality spotify artist search app that plays the top tracks for the searched artist.
-[![AR Spotify](https://img.youtube.com/vi/mc3D-ThqBSA/0.jpg)](https://youtu.be/mc3D-ThqBSA)<BR><BR>
+NEW: An augmented reality spotify artist search app that plays the top tracks for the searched artist.<BR>
+[![AR Spotify](https://img.youtube.com/vi/mc3D-ThqBSA/0.jpg)](https://youtu.be/mc3D-ThqBSA)<BR>Click to watch the video!<BR>
 
 <p>A simple augmented reality demo local weather data.<img src="weatherSimpleAR.gif"><br><br>
 A slightly more advanced demo of augmented reality presenting data gathered from location and weather API's.

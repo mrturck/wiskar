@@ -1,0 +1,311 @@
+<!-- this is supposed to use API data to create a weather dashboard  ----->
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<script src='res/three.min.js'></script>
+<script src="res/threex-artoolkitcontext.js"></script>
+<script src="res/ar.js"></script>
+<script src="res/threex.Dynamictexture.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- three.js library -->
+<!-- ar.js -->
+
+</body>
+<!-- header -->
+<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+	<div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
+	<a href='https://mrturck.github.io/wordar/' target='_blank'>mrturck</a>
+</div><script>
+// init renderer
+var response; var track =[]; var albumart =[]; var sound =[]; var artist = [];
+
+var index = 0;
+var jqxhr =$.get("https://api.spotify.com/v1/artists/2h93pZq0e7k5yf4dywlkpM/top-tracks?country=US&access_token=BQAIOI8DFuktS4FIoxpljeC8_TxTycJysqX2ywYEwQSb-uTY44PYKDQzLfixX-WQ0LCn0RaHl30K8bMc3CeKv5msLUdXOlcH0YicuLb5RII6OpPCbEJzryc3YJzD86gMvOAc8A6Wo7qJkL2AACzf9I-7sHcbmjYc6Xo",
+function( data ) {
+  response = data;
+  callback();
+  init();
+
+});
+
+function callback() {
+  //console.log(response);
+
+  for (x in response.tracks) {
+    artist.push(response.tracks[x].album.artists[0].name);
+    track.push(response.tracks[x].name);
+    albumart.push(response.tracks[x].album.images[0].url);
+    sound.push(response.tracks[x].preview_url);
+}
+}
+
+function init() {
+	var renderer	= new THREE.WebGLRenderer({
+		antialias: true,
+		alpha: true
+	});
+  var song = new Audio(sound[index]);
+
+	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
+	renderer.setSize( 640, 480 );
+	renderer.domElement.style.position = 'absolute'
+	renderer.domElement.style.top = '0px'
+	renderer.domElement.style.left = '0px'
+	document.body.appendChild( renderer.domElement );
+	// array of functions for the rendering loop
+	var onRenderFcts= [];
+	// init scene and camera
+	var scene	= new THREE.Scene();
+
+	// Create a camera
+	var camera = new THREE.Camera();
+	scene.add(camera);
+
+	////////////////////////////////////////////////////////////////////////////////
+	//          handle arToolkitSource
+	////////////////////////////////////////////////////////////////////////////////
+	var arToolkitSource = new THREEx.ArToolkitSource({
+		// to read from the webcam
+		sourceType : 'webcam',
+	})
+	arToolkitSource.init(function onReady(){
+		// handle resize of renderer
+		arToolkitSource.onResize(renderer.domElement)
+	})
+
+	// handle resize
+  window.addEventListener("keypress", keyCode);
+  var songState = 0;
+
+  function keyCode(event) {
+    //var song = new Audio(sound[index]);
+    var p = event.keyCode;
+    if (p == 112) {
+        songState = 1;
+        song.play();
+    }
+    else if (p == 111) {
+      songState = 0;
+      song.pause();
+    }
+    else if (p == 110) {
+      index += 1;
+      song.pause();
+      updateDetails();
+      detSong();
+    }
+    else if (p==98) {
+      index -= 1;
+      song.pause();
+      updateDetails();
+      detSong();
+    }
+  };
+
+  function updateDetails() {
+    formImage();
+    formTitle();
+    formArtist();
+  }
+
+  function detSong() {
+    if (songState == 1) {
+      song.play();
+    }
+  }
+
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////
+	//          initialize arToolkitContext
+	////////////////////////////////////////////////////////////////////////////////
+
+	// create atToolkitContext
+	var arToolkitContext = new THREEx.ArToolkitContext({
+		cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
+		detectionMode: 'mono',
+	})
+	// initialize it
+	arToolkitContext.init(function onCompleted(){
+		// copy projection matrix to camera
+		camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+	})
+	// update artoolkit on every frame
+	onRenderFcts.push(function(){
+		if( arToolkitSource.ready === false )	return
+		arToolkitContext.update( arToolkitSource.domElement )
+
+		// update scene.visible if the marker is seen
+		scene.visible = camera.visible
+
+	})
+
+	////////////////////////////////////////////////////////////////////////////////
+	//          Create a ArMarkerControls
+	////////////////////////////////////////////////////////////////////////////////
+
+	// init controls for camera
+	var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
+		type : 'pattern',
+		patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro',
+		// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji',
+		// as we controls the camera, set changeMatrixMode: 'cameraTransformMatrix'
+		changeMatrixMode: 'cameraTransformMatrix'
+	})
+	// as we do changeMatrixMode: 'cameraTransformMatrix', start with invisible scene
+	scene.visible = false;
+  /////////////START SEARCH TEXTURES//////////////////////////////////////////////
+  /////////////END SEARCH TEXTURES//////////////////////////////////////////////
+  /////////////START SEARCH OBJECTS//////////////////////////////////////////////
+  /////////////START SEARCH OBJECTS//////////////////////////////////////////////
+
+
+
+  /////////START TOP TRACKS TEXTURES//////////////////////////////////////////////
+  //logo transform
+  var logoTexture	= new THREEx.DynamicTexture(512,512)
+
+  function logoImage () {
+  logoTexture.context.font	= "bold "+(0.2*512)+"px Arial";
+	var url		= 'img/spotify.jpg';
+	var logo	= document.createElement('img')
+  logo.crossOrigin = "anonymous"
+	logo.src	= url;
+	logo.addEventListener('load', function(){
+		logoTexture.drawImage(logo, 0, 0)
+	})
+  }
+  logoImage();
+  //album cover texture
+  var albumTexture	= new THREEx.DynamicTexture(512,512)
+
+  function formImage () {
+  albumTexture.context.font	= "bold "+(0.2*512)+"px Arial";
+	var url		= albumart[index];
+	var image	= document.createElement('img')
+  image.crossOrigin = "anonymous"
+	image.src	= url;
+	image.addEventListener('load', function(){
+		albumTexture.drawImage(image, 0, 0)
+	})
+  }
+  formImage();
+  //song title texture
+  var songTexture	= new THREEx.DynamicTexture(512,512)
+  function formTitle() {
+  songTexture.texture.anisotropy = renderer.getMaxAnisotropy()
+  songTexture.clear()
+  songTexture.drawTextCooked({
+      text		: track[index],
+      lineHeight	: .1,
+      fillStyle: 'white',
+      align: 'center',
+      font: '32px Arial'
+    })
+  song = new Audio(sound[index]);
+  }
+  formTitle();
+  //artist name texture
+  var artistTexture	= new THREEx.DynamicTexture(512,512)
+  function formArtist() {
+  artistTexture.texture.anisotropy = renderer.getMaxAnisotropy()
+  artistTexture.clear()
+  artistTexture.drawTextCooked({
+  		text		: artist[index],
+  		lineHeight	: .1,
+      fillStyle: 'white',
+      align: 'center',
+      font: '70px Arial'
+  	})
+  }
+  formArtist();
+////////////END TOP TRACKS TEXTURES////////////////////////////
+
+//////////////START TOP TRACKS GROUP/////////////////////
+  topTracksGroup = new THREE.Group();
+	//start building things
+	var scale = .2;
+  //construct album cover
+  var screenG	= new THREE.PlaneGeometry(6*scale,6*scale);
+	var screenM	= new THREE.MeshBasicMaterial({
+   map: albumTexture.texture,
+	 side: THREE.DoubleSide
+  });
+	var screenMesh	= new THREE.Mesh( screenG, screenM );
+	screenMesh.position.x	= 0;
+	screenMesh.position.y	= 1.7;
+  screenMesh.position.z = -.6;
+	topTracksGroup.add( screenMesh );
+
+
+  //construct song title
+
+  var tbG	= new THREE.PlaneGeometry(18*scale,12*scale);
+	var tbM	= new THREE.MeshBasicMaterial({
+   map: songTexture.texture,
+	 side: THREE.DoubleSide
+  });
+	var tbMesh	= new THREE.Mesh( tbG, tbM );
+	tbMesh.position.x	= 0;
+	tbMesh.position.y	= 0;
+  tbMesh.position.z = -.8;
+	topTracksGroup.add( tbMesh );
+
+
+  //construct artist name
+  var vbG	= new THREE.PlaneGeometry(9*scale,9*scale);
+  var vbM	= new THREE.MeshBasicMaterial({
+   map: artistTexture.texture,
+   side: THREE.DoubleSide
+  });
+  var vbMesh	= new THREE.Mesh( vbG, vbM );
+  vbMesh.position.x	= 0;
+  vbMesh.position.y	= 1.8;
+  vbMesh.position.z = -.85;
+  topTracksGroup.add( vbMesh );
+  scene.add(topTracksGroup);    // <- TEMPORARY
+
+  //construct logo
+  var lG	= new THREE.PlaneGeometry(2.5,2.5);
+  var lM	= new THREE.MeshBasicMaterial({
+   map: logoTexture.texture,
+   side: THREE.DoubleSide
+  });
+  var lMesh	= new THREE.Mesh( lG, lM );
+  //lMesh.rotation.z = Math.PI/2;
+ lMesh.rotation.x = Math.PI/2;
+ lMesh.position.y = .1;
+ lMesh.position.x = .6;
+ lMesh.position.z = -.5;
+
+///////////END TOP TRACKS GROUP///////////////////////////
+  scene.add(lMesh);
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		render the whole thing on the page
+	//////////////////////////////////////////////////////////////////////////////////
+
+  // render the scene
+	onRenderFcts.push(function(){
+		renderer.render( scene, camera );
+  })
+	// run the rendering loop
+	var lastTimeMsec= null
+	requestAnimationFrame(function animate(nowMsec){
+	// keep looping
+	requestAnimationFrame( animate );
+
+	// measure time
+	lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
+	var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
+	lastTimeMsec	= nowMsec
+	// call each update function
+	onRenderFcts.forEach(function(onRenderFct){
+		onRenderFct(deltaMsec/1000, nowMsec/1000)
+    topTracksGroup.position.y = .2*Math.sin(.001*lastTimeMsec)
+    })
+	})
+
+}
+</script>

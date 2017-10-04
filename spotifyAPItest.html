@@ -1,0 +1,27 @@
+<html>
+  <head></head>
+  <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    var response; var track =[]; var albumart =[]; var sound =[]; var artist = [];
+    var jqxhr =$.get("https://api.spotify.com/v1/artists/43ZHCT0cAZBISjO8DG9PnE/top-tracks?country=US&access_token=BQD__Ud1D0Ih0Ti6SxhuqsUviBzY6_pw4fWFsHWiCTV0dc9-2WYGV65a7ORCgLU-KJ1qa7mfexRhhDmQD6wE-okdiuSCPPBIzjsQOnFZX38_GeD1F4GG6J1liHKg0MSmH_S3FJCfFGvaHNW2dp8DuCWsHGFOoefZiz0",
+    function( data ) {
+      response = data;
+      callback();
+    });
+    function callback() {
+      for (x in response.tracks) {
+      artist.push(response.tracks[x].album.artists[0].name);
+      track.push(response.tracks[x].name);
+      albumart.push(response.tracks[x].album.images[0].url);
+      sound.push(response.tracks[x].preview_url);
+        }
+      for (i in track) {
+        console.log(track[i])
+      }
+      }
+
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,249 @@
+<!-- this is supposed to use API data to create a weather dashboard  ----->
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<!-- three.js library -->
+<script src='res/three.min.js'></script>
+<script id='APIloader' type='text/javascript'>
+  var city;
+	var state;
+	var postal;
+	var temp;
+	var wind;
+
+
+	function processLoc(json) {
+		console.log(json);
+		city = json.city;
+		state = json.region_code;
+		postal = json.zip_code;
+
+		var JSLink = "http://api.wunderground.com/api/445d891086aae808/conditions/q/" + state + '/' + city + '/.json?callback=processWeather';
+		console.log(JSLink);
+		var JSElement = document.createElement('script');
+		JSElement.src = JSLink;
+		//JSElement.onload = OnceLoaded;
+		document.currentScript.appendChild(JSElement);
+		console.log('finish location script')
+}
+
+	function processWeather(json) {
+		console.log('run weather script')
+		console.log(json);
+		temp = json.current_observation.temp_f.toString();
+		dynamicTexture.clear()
+		  .drawText(temp, undefined, 256, 'white');
+		console.log(typeof(temp));
+		wind = json.current_observation.wind_mph.toString();
+		console.log(wind);
+}
+</script>
+<!-- ar.js -->
+<script src="res/ar.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="res/threex.Dynamictexture.js"></script>
+<script src="res/threex-artoolkitcontext.js"></script>
+<script src='http://freegeoip.net/json/?callback=processLoc'></script>
+<!-- <script src='http://api.wunderground.com/api/445d891086aae808/conditions/q/NY/Albany.json?callback=processWeather'> -->
+</script>
+
+</body>
+<!-- header -->
+<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+	<div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
+	<a href='https://mrturck.github.io/wordar/' target='_blank'>mrturck</a>
+</div><script defer>
+console.log('starting main script')
+	//////////////////////////////////////////////////////////////////////////////////
+	//		Init
+	//////////////////////////////////////////////////////////////////////////////////
+	// init renderer
+	var renderer	= new THREE.WebGLRenderer({
+		antialias: true,
+		alpha: true
+	});
+	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
+	renderer.setSize( 640, 480 );
+	renderer.domElement.style.position = 'absolute'
+	renderer.domElement.style.top = '0px'
+	renderer.domElement.style.left = '0px'
+	document.body.appendChild( renderer.domElement );
+	// array of functions for the rendering loop
+	var onRenderFcts= [];
+	// init scene and camera
+	var scene	= new THREE.Scene();
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		Initialize a basic camera
+	//////////////////////////////////////////////////////////////////////////////////
+	// Create a camera
+	var camera = new THREE.Camera();
+	scene.add(camera);
+	////////////////////////////////////////////////////////////////////////////////
+	//          handle arToolkitSource
+	////////////////////////////////////////////////////////////////////////////////
+	var arToolkitSource = new THREEx.ArToolkitSource({
+		// to read from the webcam
+		sourceType : 'webcam',
+	})
+	arToolkitSource.init(function onReady(){
+		// handle resize of renderer
+		arToolkitSource.onResize(renderer.domElement)
+	})
+
+	// handle resize
+	window.addEventListener('resize', function(){
+		// handle arToolkitSource resize
+		arToolkitSource.onResize(renderer.domElement)
+	})
+	////////////////////////////////////////////////////////////////////////////////
+	//          initialize arToolkitContext
+	////////////////////////////////////////////////////////////////////////////////
+
+	// create atToolkitContext
+	var arToolkitContext = new THREEx.ArToolkitContext({
+		cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
+		detectionMode: 'mono',
+	})
+	// initialize it
+	arToolkitContext.init(function onCompleted(){
+		// copy projection matrix to camera
+		camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+	})
+	// update artoolkit on every frame
+	onRenderFcts.push(function(){
+		if( arToolkitSource.ready === false )	return
+		arToolkitContext.update( arToolkitSource.domElement )
+
+		// update scene.visible if the marker is seen
+		scene.visible = camera.visible
+	})
+
+	////////////////////////////////////////////////////////////////////////////////
+	//          Create a ArMarkerControls
+	////////////////////////////////////////////////////////////////////////////////
+
+	// init controls for camera
+	var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
+		type : 'pattern',
+		patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro',
+		// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji',
+		// as we controls the camera, set changeMatrixMode: 'cameraTransformMatrix'
+		changeMatrixMode: 'cameraTransformMatrix'
+	})
+	// as we do changeMatrixMode: 'cameraTransformMatrix', start with invisible scene
+	scene.visible = false;
+
+	//////////////////////////////////////////////////////////////////////////////////
+  /////////Getting location data////////////////////////////////////////////////////
+
+	console.log('prepare request');
+
+   console.log(city);
+	 console.log(state);
+
+
+  //////////////////////////////////////////////////////////////////////////////////
+	// hgt to adjust position of elements
+	hgt = .5;
+
+	////////////bottom left text - weather icon
+	var weatherTexture	= new THREEx.DynamicTexture(512,512)
+		weatherTexture.context.font	= "bold  50px Arial";
+	// use .drawImage on the texture
+		var url		= 'img/Sunny-icon.png'
+		var image	= document.createElement('img')
+		image.src	= url
+		image.addEventListener('load', function(){
+			weatherTexture.drawImage(image, 0, 0)
+		})
+  ////////////bottom left element render
+	var geometry1	= new THREE.PlaneGeometry(1.25,1);
+	var material1	= new THREE.MeshBasicMaterial({
+		map	: weatherTexture.texture,
+ 	 opacity: 0.05,
+	 side: THREE.DoubleSide
+		});
+	var mesh1	= new THREE.Mesh( geometry1, material1 );
+	mesh1.position.x	=  0;
+	mesh1.position.y = hgt;
+	scene.add( mesh1 );
+
+	////////////bottom right text - temp in F
+	var dynamicTexture	= new THREEx.DynamicTexture(512,512)
+	dynamicTexture.context.font	= "bold 200px Arial";
+	dynamicTexture.texture.anisotropy = renderer.getMaxAnisotropy()
+	// update the text
+	dynamicTexture.clear()
+	  .drawText(temp, undefined, 256, 'white')
+  /////////////bottom right render
+	var geometry2	= new THREE.PlaneGeometry(1,1);
+	var material2	= new THREE.MeshBasicMaterial({
+		map	: dynamicTexture.texture,
+ 	 opacity: 0.05,
+	 side: THREE.DoubleSide
+	  });
+	var mesh2	= new THREE.Mesh( geometry2, material2 );
+	mesh2.position.x	= .75;
+	mesh2.position.y = hgt;
+  scene.add( mesh2 );
+  /////////////top left text - city, state
+	var citystring = city+", "+state;
+  var cityTexture	= new THREEx.DynamicTexture(512,512)
+		cityTexture.context.font	= "bold 50px Arial";
+		cityTexture.texture.anisotropy = renderer.getMaxAnisotropy()
+		cityTexture.clear()
+		  .drawText(citystring, undefined, 256, 'white')
+	//////////////top left render
+	var geometry3	= new THREE.PlaneGeometry(2,1);
+	var material3	= new THREE.MeshBasicMaterial({
+ 	 map	: cityTexture.texture,
+	 opacity: 0,
+	 side: THREE.DoubleSide
+  });
+  var mesh3	= new THREE.Mesh( geometry3, material3 );
+	mesh3.position.x	= 0.25;
+	mesh3.position.y	= hgt + 1;
+  scene.add( mesh3 );
+
+	//////////middle left text
+	var dayTexture	= new THREEx.DynamicTexture(512,512)
+		dayTexture.context.font	= "bold 90px Arial";
+		dayTexture.texture.anisotropy = renderer.getMaxAnisotropy()
+		// update the text
+		dayTexture.clear()
+		  .drawText('Wed', undefined, 256, 'white')
+	//////////render
+	var geometry4	= new THREE.PlaneGeometry(1,.5);
+	var material4	= new THREE.MeshBasicMaterial({
+ 	 map	: dayTexture.texture,
+	 opacity: 0.05,
+	 side: THREE.DoubleSide
+  });
+	var mesh4	= new THREE.Mesh( geometry4, material4 );
+	mesh4.position.x	= .75;
+	mesh4.position.y	= hgt + .625;
+	scene.add( mesh4 );
+
+		//////////////////////////////////////////////////////////////////////////////////
+	//		render the whole thing on the page
+	//////////////////////////////////////////////////////////////////////////////////
+	// render the scene
+	onRenderFcts.push(function(){
+		renderer.render( scene, camera );
+	 })
+	// run the rendering loop
+	var lastTimeMsec= null
+	requestAnimationFrame(function animate(nowMsec){
+		// keep looping
+		requestAnimationFrame( animate );
+		// measure time
+		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
+		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
+		lastTimeMsec	= nowMsec
+		// call each update function
+		onRenderFcts.forEach(function(onRenderFct){
+			onRenderFct(deltaMsec/1000, nowMsec/1000)
+		})
+	})
+	console.log('finish main script')
+</script>

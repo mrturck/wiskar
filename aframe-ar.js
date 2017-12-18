@@ -62379,7 +62379,7 @@ AFRAME.registerComponent("arjs-anchor", {
         },
         minConfidence: {
             type: "number",
-            "default": .6
+            "default": .3
         }
     },
     init: function() {

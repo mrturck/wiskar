@@ -62412,7 +62412,7 @@ AFRAME.registerComponent("arjs-anchor", {
                 arProfile.defaultMarkerParameters.markersAreaEnabled = true
             } else if (_this.data.preset === "QR") {
                 arProfile.defaultMarkerParameters.type = "pattern";
-                arProfile.defaultMarkerParameters.patternUrl = "https://raw.githubusercontent.com/mrturck/wiskar-pub/master/testQR.patt";
+                arProfile.defaultMarkerParameters.patternUrl = "https://raw.githubusercontent.com/mrturck/wiskar/master/patterns/testQR.patt";
                 arProfile.defaultMarkerParameters.markersAreaEnabled = false
             }else {}
             var arSession = arjsSystem._arSession;

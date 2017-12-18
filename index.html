@@ -1,0 +1,15 @@
+<!-- Augmented Reality on the Web in 10 lines of html! https://github.com/jeromeetienne/ar.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/0.7.1/aframe.min.js"></script>
+<script src="aframe-ar.min.js"></script>
+<script src="https://unpkg.com/aframe-animation-component@3.2.1/dist/aframe-animation-component.min.js"></script>
+<script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
+
+<body style='margin : 0px; overflow: hidden;'>
+	<a-scene embedded arjs='sourceType: webcam;'>
+		<a-box position='0 0.5 0' material='opacity: 0.5' animation="property: scale; dir: alternate; dur: 100; to: 1.1 1.1 1.1; loop: true">
+			<a-entity particle-system="preset: default; color: #515; particleCount: 1000" position="0 0 0"></a-entity>
+
+		</a-box>
+		<a-marker-camera preset='hiro'></a-marker-camera>
+	</a-scene>
+</body>

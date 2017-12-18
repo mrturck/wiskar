@@ -62410,7 +62410,11 @@ AFRAME.registerComponent("arjs-anchor", {
                 arProfile.defaultMarkerParameters.type = "barcode";
                 arProfile.defaultMarkerParameters.barcodeValue = 1001;
                 arProfile.defaultMarkerParameters.markersAreaEnabled = true
-            } else {}
+            } else if (_this.data.preset === "QR") {
+                arProfile.defaultMarkerParameters.type = "pattern";
+                arProfile.defaultMarkerParameters.patternUrl = "testQR.patt";
+                arProfile.defaultMarkerParameters.markersAreaEnabled = false
+            }else {}
             var arSession = arjsSystem._arSession;
             var arAnchor = _this._arAnchor = new ARjs.Anchor(arSession, arProfile.defaultMarkerParameters);
             _this.isReady = true;

@@ -60533,7 +60533,7 @@ THREEx.ArMarkerControls = function(context, object3d, parameters) {
         patternUrl: null,
         barcodeValue: null,
         changeMatrixMode: "modelViewMatrix",
-        minConfidence: .6
+        minConfidence: .3
     };
     var possibleValues = ["pattern", "barcode", "unknown"];
     console.assert(possibleValues.indexOf(this.parameters.type) !== -1, "illegal value", this.parameters.type);
@@ -62412,7 +62412,7 @@ AFRAME.registerComponent("arjs-anchor", {
                 arProfile.defaultMarkerParameters.markersAreaEnabled = true
             } else if (_this.data.preset === "QR") {
                 arProfile.defaultMarkerParameters.type = "pattern";
-                arProfile.defaultMarkerParameters.patternUrl = "testQR.patt";
+                arProfile.defaultMarkerParameters.patternUrl = "https://raw.githubusercontent.com/mrturck/wiskar-pub/master/testQR.patt";
                 arProfile.defaultMarkerParameters.markersAreaEnabled = false
             }else {}
             var arSession = arjsSystem._arSession;

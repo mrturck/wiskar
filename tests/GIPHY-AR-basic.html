@@ -1,0 +1,34 @@
+<!-- pulsing box shooting out stars -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/0.7.1/aframe.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="../build/aframe-ar.js"></script>
+
+<body style='margin : 0px; overflow: hidden;'>
+	<a-scene embedded arjs='sourceType: webcam;'>
+
+		<a-assets >
+				<a-video loop id="my-texture" src="">
+		</a-assets>
+
+		<a-marker-camera preset='QR'></a-marker-camera>
+	</a-scene>
+
+	<script>
+
+	var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=animals+baby&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=5");
+	var receipt = xhr.done(function(data) {
+	var image = data.data[3].images.original_mp4["mp4"];
+
+		document.getElementById("my-texture").setAttribute('src',image)
+
+		//test creating with js
+		var scene = document.querySelector('a-scene');
+		var plane = document.createElement('a-plane');
+
+		plane.setAttribute('position', '0 0 0');
+		plane.setAttribute('material', 'src: #my-texture')
+		scene.appendChild(plane);
+	});
+
+	</script>
+</body>

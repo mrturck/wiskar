@@ -1,0 +1,35 @@
+<!-- Simple demo requesting GIFs from GIPHY using their API, simply displaying in HTML -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>title</title>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+<!-- javascript, jQuery show top 5 gif responses to query  -->
+
+<script>
+  var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=animals+baby&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=5");
+  var receipt = xhr.done(function(data) {
+    console.log("success got data");
+    console.log(data)
+
+    for (i = 0; i < data.data.length; i++)
+    createIMG(data.data[i].images.downsized["url"]);
+  });
+
+  function createIMG(url) {
+    var x = document.createElement("IMG");
+        x.setAttribute('src',url);
+    document.body.appendChild(x);
+  }
+</script>

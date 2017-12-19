@@ -1,0 +1,51 @@
+<!-- Use JQuery to pull up a Gif from GIPHY on shape in VR -->
+</head>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Textures - A-Frame School</title>
+    <meta name="description" content="Textures - A-Frame School">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/0.7.1/aframe.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+
+  <body>
+    <a-scene >
+
+      <a-assets timeout="10000">
+          <a-video loop id="my-texture" src="">
+      </a-assets>
+
+      <a-sky></a-sky>
+      <a-sphere src="" radius="0.5" position="0 0.5 -3"></a-sphere>
+      <a-cone src="" height="2" radius-top="0.1" position="0 1 -6"></a-cone>
+      <a-box src="" position="2 0.5 -4"></a-box>
+      <a-plane src="" rotation="-90 0 0" height="100" width="100"></a-plane>
+      <a-light type="ambient" color="#445451"></a-light>
+      <a-light type="point" intensity="2" position="2 4 4"></a-light>
+
+    </a-scene>
+
+    <script>
+
+    var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=animals+baby&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=5");
+    var receipt = xhr.done(function(data) {
+    var image = data.data[3].images.original_mp4["mp4"];
+
+      document.getElementById("my-texture").setAttribute('src',image)
+      console.log('attribute is')
+      console.log(document.getElementById("my-texture").getAttribute("src"));
+
+      //test creating with js
+      var scene = document.querySelector('a-scene');
+      var box = document.createElement('a-box');
+
+      box.setAttribute('position', '-2 .5 -4');
+      box.setAttribute('material', 'src: #my-texture')
+      scene.appendChild(box);
+    });
+
+    </script>
+  </body>
+</html>

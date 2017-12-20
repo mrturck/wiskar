@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>A-Frame Mouse Cursor Component - Basic</title>
+		<script src="https://aframe.io/releases/0.7.1/aframe.js"></script>
+		<script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+	  <script src="../build/aframe-ar.js"></script>
+  </head>
+  <body>
+    <a-scene embedded arjs='sourceType: webcam' cursor="rayOrigin: mouse">
+      <a-box position="0 0 0" rotation="30 30 0" color="skyblue"
+			   event-set__down="_event: mousedown; geometry: primitive:cone"
+				 event-set__up="_event: mouseup; scale: 1 1 1"
+				 event-set__leave="_event: mouseleave; scale: 1 1 1">
+      </a-box>
+
+      <a-entity position="0 1.8 4">
+				<a-marker-camera preset='QR'></a-marker-camera>
+                </a-entity>
+      </a-entity>
+
+      </a-entity>
+    </a-scene>
+    <div class="spacer"></div>
+    <div class="spacer2"></div>
+  </body>
+</html>

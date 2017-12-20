@@ -7,21 +7,58 @@
 		<script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
     <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
 	  <script src="../build/aframe-ar.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
   </head>
   <body>
     <a-scene embedded arjs='sourceType: webcam' cursor="rayOrigin: mouse">
-      <a-box position="0 0 0" rotation="30 30 0" color="skyblue"
+
+			<a-assets >
+					<a-video loop id="my-texture" src="">
+			</a-assets>
+			<!-- <a-cylinder position="0 0 0" radius="0.5" height="1.5" color="#FFC65D"
+		                   event-set__down="_event: mousedown; scale: 2 2 2"
+		                   event-set__leave="_event: mouseleave; scale: 1 1 1">
+		         <a-text id="cylinderText" value="This is a cylinder" align="center" color="#FFF" visible="false" position="0 -0.55 0.55"
+		                 geometry="primitive: plane; width: 1.75" material="color: #333"></a-text>
+		       </a-cylinder> -->
+			<script>
+			var i = 0;
+			var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=star+wars&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=5");
+			var receipt = xhr.done(function(data) {
+			var image = data.data[i].images.original_mp4["mp4"];
+
+			document.getElementById("my-texture").setAttribute('src',image)
+			createPlane();
+			});
+
+			function createPlane() {
+				var scene = document.querySelector('a-scene');
+
+				if(document.querySelector('a-plane')) {
+					var oldPlane = document.querySelector('a-plane');
+					oldPlane.parentNode.removeChild(oldPlane);
+				}
+
+				var plane = document.createElement('a-plane');
+				plane.setAttribute('rotation','270 0 0');
+				plane.setAttribute('material', 'src: #my-texture')
+				plane.setAttribute('event-set__enter','_event: mouseenter; scale: 2 2 2')
+				plane.setAttribute('event-set__leave','_event: mouseleave; scale: 1 1 1')
+				scene.appendChild(plane);
+			};
+
+			</script>
+      <!-- <a-box position="0 0 0" rotation="30 30 0" color="skyblue"
 			   event-set__down="_event: mousedown; geometry: primitive:cone"
 				 event-set__up="_event: mouseup; scale: 1 1 1"
 				 event-set__leave="_event: mouseleave; scale: 1 1 1">
-      </a-box>
+      </a-box> -->
 
-      <a-entity position="0 1.8 4">
+      <a-entity position="0 .1 0 ">
 				<a-marker-camera preset='QR'></a-marker-camera>
                 </a-entity>
-      </a-entity>
 
-      </a-entity>
     </a-scene>
     <div class="spacer"></div>
     <div class="spacer2"></div>

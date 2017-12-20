@@ -15,7 +15,7 @@
 
 	<script>
 
-	var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=animals+baby&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=5");
+	var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=star+wars&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=5");
 	var receipt = xhr.done(function(data) {
 	var image = data.data[3].images.original_mp4["mp4"];
 

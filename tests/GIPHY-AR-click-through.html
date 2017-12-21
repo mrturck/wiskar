@@ -24,7 +24,7 @@
 			});
 
 			function createPlane(data,i) {
-				var image = data.data[i].images.downsized["url"];
+				var image = data.data[i].images.fixed_width_downsampled["url"];
         var image_url = "shader:gif;src:url(" + image + ")"
         console.log(image_url)
 				var scene = document.querySelector('a-scene');

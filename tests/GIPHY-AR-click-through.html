@@ -20,7 +20,7 @@
 
 			<script>
 			var i = 0;
-			var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=disney+world&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=10");
+			var xhr = $.get("https://api.giphy.com/v1/gifs/search?q=disney+world&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=10");
 			var receipt = xhr.done(function(data) {
 			createPlane(data,i);
 			});

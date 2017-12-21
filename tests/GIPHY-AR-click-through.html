@@ -39,6 +39,7 @@
 				var plane = document.createElement('a-plane');
 				plane.setAttribute('rotation','270 0 0');
 				plane.setAttribute('material', 'src: #my-texture')
+        plane.setAttribute('autoplay','true')
         plane.setAttribute('scale','2 2 2')
 				plane.setAttribute('event-set__down','_event: mousedown; scale: 2.1 2.1 2.1')
 				plane.setAttribute('event-set__leave','_event: mouseleave; scale: 1 1 1')

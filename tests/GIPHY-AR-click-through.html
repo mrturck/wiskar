@@ -7,6 +7,8 @@
 		<script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
     <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
 	  <script src="../build/aframe-ar.min.js"></script>
+    <script src="a-frame-gif-component.js"></script>
+
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   </head>
 
@@ -38,7 +40,9 @@
 
 				var plane = document.createElement('a-plane');
 				plane.setAttribute('rotation','270 0 0');
-				plane.setAttribute('material', 'src: #my-texture')
+        plane.setAttribute('gif','true')
+        plane.setAttribute('material','shader:gif;src:url(https://media.giphy.com/media/3oz8xOvhnSpVOs9xza/giphy.gif)')
+				// plane.setAttribute('material', 'src: #my-texture')
         plane.setAttribute('scale','2 2 2')
 				plane.setAttribute('event-set__down','_event: mousedown; scale: 2.1 2.1 2.1')
 				plane.setAttribute('event-set__leave','_event: mouseleave; scale: 1 1 1')

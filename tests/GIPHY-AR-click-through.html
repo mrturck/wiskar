@@ -20,7 +20,7 @@
 
 			<script>
 			var i = 0;
-			var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=my+little+pony&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=5");
+			var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=star+wars&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=5");
 			var receipt = xhr.done(function(data) {
 			createPlane(data,i);
 			});
@@ -38,7 +38,6 @@
 
 				var plane = document.createElement('a-plane');
 				plane.setAttribute('rotation','270 0 0');
-        plane.setAttribute('opacity','.7')
 				plane.setAttribute('material', 'src: #my-texture')
         plane.setAttribute('scale','2 2 2')
 				plane.setAttribute('event-set__down','_event: mousedown; scale: 2.1 2.1 2.1')

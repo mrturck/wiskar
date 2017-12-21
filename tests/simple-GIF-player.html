@@ -1,0 +1,15 @@
+<head>
+  <title>My A-Frame Scene</title>
+  <script src="https://aframe.io/releases/0.2.0/aframe.min.js"></script>
+  <script src="a-frame-gif-component.js"></script>
+
+</head>
+
+<body>
+  <script> var j = "shader:gif;src:url(https://media.giphy.com/media/3oz8xOvhnSpVOs9xza/giphy.gif)"</script>
+  <a-scene>
+    <a-entity geometry="primitive:plane" id="tv-screen" gif position="-0.332 3.985 -4.836"  rotation="1.891 2.063 0.057">
+</-entity>
+<script> document.querySelector("a-entity").setAttribute('material',j)</script>
+  </a-scene>
+</body>

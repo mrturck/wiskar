@@ -16,22 +16,18 @@
 
     <a-scene embedded arjs='sourceType: webcam' cursor="rayOrigin: mouse">
 
-			<a-assets >
-					<a-video preload autoplay loop muted playsinline id="my-texture" src="">
-			</a-assets>
-
 			<script>
 			var i = 0;
-			var xhr = $.get("https://api.giphy.com/v1/gifs/search?q=disney+world&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=10");
+			var xhr = $.get("https://api.giphy.com/v1/gifs/search?q=star+wars&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=10");
 			var receipt = xhr.done(function(data) {
 			createPlane(data,i);
 			});
 
 			function createPlane(data,i) {
-				var image = data.data[i].images.original_mp4["mp4"];
+				var image = data.data[i].images.downsized["url"];
+        var image_url = "shader:gif;src:url(" + image + ")"
+        console.log(image_url)
 				var scene = document.querySelector('a-scene');
-
-				document.getElementById("my-texture").setAttribute('src',image)
 
 				if(document.querySelector('a-plane')) {
 					var oldPlane = document.querySelector('a-plane');
@@ -41,8 +37,7 @@
 				var plane = document.createElement('a-plane');
 				plane.setAttribute('rotation','270 0 0');
         plane.setAttribute('gif','true')
-        plane.setAttribute('material','shader:gif;src:url(https://media.giphy.com/media/3oz8xOvhnSpVOs9xza/giphy.gif)')
-				// plane.setAttribute('material', 'src: #my-texture')
+				plane.setAttribute('material', image_url)
         plane.setAttribute('scale','2 2 2')
 				plane.setAttribute('event-set__down','_event: mousedown; scale: 2.1 2.1 2.1')
 				plane.setAttribute('event-set__leave','_event: mouseleave; scale: 1 1 1')

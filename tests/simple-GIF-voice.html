@@ -1,0 +1,51 @@
+<head>
+  <title>My A-Frame Scene</title>
+  <script src="https://aframe.io/releases/0.2.0/aframe.min.js"></script>
+  <script src="a-frame-gif-component.js"></script>
+  <script src="annyang.min.js"></script></head>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+<body>
+
+  <a-scene>
+      <a-box scale="5 5" position="0 0 -2"></a-box>
+   </a-scene>
+
+   <script>
+    function update(x) {
+      var xhr = $.get("https://api.giphy.com/v1/gifs/search?q="+x+"&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=10");
+      var receipt = xhr.done(function(data) {
+        var image = data.data[0].images.fixed_width_downsampled["url"];
+        var image_url = "shader:gif;src:url(" + image + ")"
+        document.querySelector('a-box').setAttribute('material', image_url)
+        });
+      }
+
+      var j = "shader:gif;src:url(https://media.giphy.com/media/3oz8xOvhnSpVOs9xza/giphy.gif)"
+      document.querySelector('a-box').setAttribute('material',j)
+   </script>
+
+   <script>
+
+   if (annyang) {
+
+     var test = function(x) {
+       console.log(x)
+       update(x);
+     }
+
+    var getStarted = function() {
+      window.location.href = 'https://github.com/TalAter/annyang';
+    }
+
+    var commands = {
+      'show me *search':      test,
+    };
+
+    annyang.addCommands(commands);
+    annyang.setLanguage('en');
+    annyang.start({ autoRestart: true });
+    }
+</script>
+
+</body>

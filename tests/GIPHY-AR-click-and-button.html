@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>A-Frame Mouse Cursor Component - Basic</title>
+		<script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+		<script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+	  <script src="../build/aframe-ar.min.js"></script>
+    <script src="../lib/a-frame-gif-component.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  </head>
+
+  <body>
+    <style>
+      .hovbutton {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      z-index: 3;
+      }
+    </style>
+
+    <button
+      id="testbutton" class="hovbutton mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-button--colored">
+      <i class="material-icons">add</i>
+    </button>
+
+    <a-scene embedded arjs='sourceType: webcam' cursor="rayOrigin: mouse"class="aframebox">
+      <a-entity position="0 .4 0 ">
+        <a-marker-camera preset='QR'></a-marker-camera>
+      </a-entity>
+    </a-scene>
+
+  </body>
+</html>
+
+		<script>
+
+    document.getElementById('testbutton').addEventListener('mousedown',function(){gifCall("apple")})
+    gifCall("star+wars");
+
+    function gifCall(search) {
+
+  		var i = 0;
+  		var xhr = $.get("https://api.giphy.com/v1/gifs/search?q="+search+"&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=10");
+  		var receipt = xhr.done(function(data) {
+  		createPlane(data,i);
+  		});
+
+      }
+
+    function createPlane(data,i) {
+
+    			var image = data.data[i].images.fixed_width_downsampled["url"];
+          var image_url = "shader:gif;src:url(" + image + ")"
+    			var scene = document.querySelector('a-scene');
+
+    			if(document.querySelector('a-plane')) {
+    				var oldPlane = document.querySelector('a-plane');
+    				oldPlane.parentNode.removeChild(oldPlane);
+    			}
+
+    			var plane = document.createElement('a-plane');
+      			plane.setAttribute('rotation','270 0 0');
+            plane.setAttribute('gif','true')
+      			plane.setAttribute('material', image_url)
+            plane.setAttribute('scale','2 2 2')
+      			plane.setAttribute('event-set__down','_event: mousedown; scale: 1.3 1.3 1.3')
+      			plane.setAttribute('event-set__leave','_event: mouseleave; scale: 1 1 1')
+      			scene.appendChild(plane);
+
+            plane.addEventListener('componentchanged', function (evt) {
+                if (evt.detail.name === 'scale') {
+                  i = i + 1;
+                  createPlane(data,i)
+                }
+                });
+
+              };
+</script>

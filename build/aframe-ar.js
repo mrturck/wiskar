@@ -60533,7 +60533,7 @@ THREEx.ArMarkerControls = function(context, object3d, parameters) {
         patternUrl: null,
         barcodeValue: null,
         changeMatrixMode: "modelViewMatrix",
-        minConfidence: .3
+        minConfidence: .1
     };
     var possibleValues = ["pattern", "barcode", "unknown"];
     console.assert(possibleValues.indexOf(this.parameters.type) !== -1, "illegal value", this.parameters.type);
@@ -62379,7 +62379,7 @@ AFRAME.registerComponent("arjs-anchor", {
         },
         minConfidence: {
             type: "number",
-            "default": .3
+            "default": .1
         }
     },
     init: function() {

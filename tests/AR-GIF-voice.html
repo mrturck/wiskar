@@ -17,9 +17,12 @@
 
     <a-scene embedded arjs='sourceType: webcam;'>
 
-  		<a-plane rotation="270 0 0"></a-plane>
+  		<a-marker-camera preset='QR'>
 
-  		<a-marker-camera preset='QR'></a-marker-camera>
+        <a-plane rotation="270 0 0"></a-plane>
+
+  		</a-marker-camera>
+      
   	</a-scene>
 		<script>
 

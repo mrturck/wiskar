@@ -4,30 +4,56 @@
   <script src="../lib/a-frame-gif-component.js"></script>
   <script src="../lib/annyang.min.js"></script></head>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  <link rel = "stylesheet" href = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+  <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
 
+  <style> .hov {  position: absolute;left: 10px;top: 10px;z-index: 3;}  </style>
 <body>
+<script>function searchGif() {
+text = document.getElementById("text8").value;
+update(text)
 
+function update(x) {
+  var xhr = $.get("https://api.giphy.com/v1/gifs/search?q="+x+"&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=10");
+  var receipt = xhr.done(function(data) {
+    var image = data.data[0].images.fixed_width_downsampled["url"];
+    var image_url = "shader:gif;src:url(" + image + ")"
+    document.querySelector('a-box').setAttribute('material', image_url)
+    });
+  }
+
+}</script>
+<!--  UI Elements not AR-->
+
+<form class="hov" onsubmit="searchGif()">
+                  <div class = "mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                     <label class = "mdl-button mdl-js-button mdl-button--icon"
+                        for = "text8">
+                        <i class = "material-icons">search</i>
+                     </label>
+                     <div class = "mdl-textfield__expandable-holder">
+                        <input class = "mdl-textfield__input" type = "text" id = "text8">
+                        <label class = "mdl-textfield__label" for = "sample-expandable">
+                           Expandable Input</label>
+                     </div>
+                  </div>
+               </form>
+
+<!-- Start A-frame environmnent -->
   <a-scene>
       <a-box position="0 1.5 -3" scale="3 3 3" rotation="0 20 0"></a-box>
    <a-plane position="0 0 -4" rotation="-90 0 0" height="30" width="30" height="4" color="#7BC8A4"></a-plane>
    <a-sky color="#ECECEC"></a-sky>
 
    </a-scene>
-
+<!-- start JQuery to load GIF -->
    <script>
-    function update(x) {
-      var xhr = $.get("https://api.giphy.com/v1/gifs/search?q="+x+"&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=10");
-      var receipt = xhr.done(function(data) {
-        var image = data.data[0].images.fixed_width_downsampled["url"];
-        var image_url = "shader:gif;src:url(" + image + ")"
-        document.querySelector('a-box').setAttribute('material', image_url)
-        });
-      }
-
-      var j = "shader:gif;src:url(https://media.giphy.com/media/3oz8xOvhnSpVOs9xza/giphy.gif)"
+          var j = "shader:gif;src:url(https://media.giphy.com/media/3oz8xOvhnSpVOs9xza/giphy.gif)"
       document.querySelector('a-box').setAttribute('material',j)
-   </script>
 
+   </script>
+<!-- Start voice activation feature -->
    <script>
 
    if (annyang) {

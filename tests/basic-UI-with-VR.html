@@ -7,6 +7,8 @@
   <script src = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
   <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.2/dialog-polyfill.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.2/dialog-polyfill.min.js"></script>
   <style> .hov {  position: fixed;left: 10px;top: 10px;z-index: 3;}
   .bar {
            box-sizing: border-box;
@@ -82,10 +84,10 @@ function update(x) {
     <button  id="menu-wiskar" class="mdl-button mdl-js-button mdl-button--icon">
       <i class="material-icons">more_vert</i>
     </button>
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-wiskar">
+    <ul class="hov mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-wiskar">
       <li class="mdl-menu__item fast">What is this?</li>
     </ul>
-      <dialog class="mdl-dialog">
+      <dialog class="hov mdl-dialog">
         <h5 class="mdl-dialog__title">VR Gif search</h5>
         <div class="mdl-dialog__content">
           <p>

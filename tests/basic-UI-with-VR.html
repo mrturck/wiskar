@@ -40,7 +40,7 @@ function update(x) {
   var receipt = xhr.done(function(data) {
     var image = data.data[0].images.fixed_width_downsampled["url"];
     var image_url = "shader:gif;src:url(" + image + ")"
-    document.querySelector('a-box').setAttribute('material', image_url)
+    document.querySelector('a-plane').setAttribute('material', image_url)
     });
   }
 
@@ -49,12 +49,12 @@ function update(x) {
 <!--  UI Elements not AR-->
 <!--  search bar that executes Gif search on enter-->
 <div class="mdl-layout__header-row mdl-shadow--2dp">
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width is-focused">
         <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
           <i class="material-icons">search</i>
         </label>
-        <div class="mdl-textfield__expandable-holder">
-          <input class="mdl-textfield__input" type="text" id="search-field" onkeydown="searchGif(event)">
+        <div class="mdl-textfield__expandable-holder is-focused">
+          <input class="mdl-textfield__input" placeholder="Type to search for a GIF" type="text" id="search-field" onkeydown="searchGif(event)">
         </div>
   </div>
  <div class="spacer mdl-layout-spacer"></div>
@@ -77,14 +77,14 @@ function update(x) {
 
 <!-- Start A-frame environmnent -->
   <a-scene vr-mode-ui="enabled: false">
-   <a-box position="0 1.5 -3" scale="3 3 3" rotation="0 20 0"></a-box>
-   <a-plane position="0 0 -4" rotation="-90 0 0" height="30" width="30" height="4" color="#7BC8A4"></a-plane>
+   <a-plane position="0 2 -3" height="3" width="3" rotation="0 0 0"></a-box>
+   <a-plane position="0 -2 -4" rotation="-90 0 0" height="30" width="30" height="4" color="#7BC8A4"></a-plane>
    <a-sky color="#ECECEC"></a-sky>
  </a-scene>
 <!-- start JQuery to load GIF -->
    <script>
       var j = "shader:gif;src:url(https://media.giphy.com/media/3oz8xOvhnSpVOs9xza/giphy.gif)"
-      document.querySelector('a-box').setAttribute('material',j)
+      document.querySelector('a-plane').setAttribute('material',j)
 
    </script>
 

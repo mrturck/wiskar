@@ -1,0 +1,91 @@
+<head>
+  <title>My A-Frame Scene</title>
+  <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+  <script src="../lib/a-frame-gif-component.js"></script>
+  <script src="../lib/annyang.min.js"></script></head>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src = "https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+  <style> .hov {  position: absolute;left: 10px;top: 10px;z-index: 3;}
+  .bar {
+           box-sizing: border-box;
+           background: #009cf4;
+           color: white;
+           width: 100%;
+           height: 64px;
+           padding: 16px;
+        }
+        .container {
+          text-align: center;
+             position: relative;
+             width: 200px;
+          }</style>
+
+<body>
+
+
+
+<script>function searchGif(event) {
+  var keycode = (event.keyCode ? event.keyCode : event.which);
+if (keycode == '13') {
+  console.log(keycode)
+text = document.getElementById("search-field").value;
+update(text)
+}
+
+
+function update(x) {
+  var xhr = $.get("https://api.giphy.com/v1/gifs/search?q="+x+"&api_key=nb7FO4v0achKto445uJPRnFdA03NFLi0&limit=10");
+  var receipt = xhr.done(function(data) {
+    var image = data.data[0].images.fixed_width_downsampled["url"];
+    var image_url = "shader:gif;src:url(" + image + ")"
+    document.querySelector('a-box').setAttribute('material', image_url)
+    });
+  }
+
+
+}</script>
+<!--  UI Elements not AR-->
+<!--  search bar that executes Gif search on enter-->
+<div class="mdl-layout__header-row mdl-shadow--2dp">
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+        <label class="mdl-button mdl-js-button mdl-button--icon" for="search-field">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" id="search-field" onkeydown="searchGif(event)">
+        </div>
+  </div>
+ <div class="spacer mdl-layout-spacer"></div>
+ <div class="mdl-layout-title" style="background: rgb(226, 255, 192); color: #ffffff; margin: 3px; padding: 3px; font-weight: 700; text-shadow: 0px 0px 3px #000000; box-shadow: inset 0px 0px 5px rgba(0,0,0,0.5)">AR</div>
+ <div class="mdl-layout-title" style="font-weight: 700; color: rgba(0, 150, 136, 2)"> Wiskar</div>
+
+ <button  id="menu-speed" class="mdl-button mdl-js-button mdl-button--icon right">
+   <i class="material-icons">more_vert</i>
+ </button>
+
+ <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-speed">
+   <li class="mdl-menu__item">Fast</li>
+   <li class="mdl-menu__item">Medium</li>
+   <li class="mdl-menu__item">Slow</li>
+ </ul>
+</div>
+
+
+
+
+<!-- Start A-frame environmnent -->
+  <a-scene vr-mode-ui="enabled: false">
+   <a-box position="0 1.5 -3" scale="3 3 3" rotation="0 20 0"></a-box>
+   <a-plane position="0 0 -4" rotation="-90 0 0" height="30" width="30" height="4" color="#7BC8A4"></a-plane>
+   <a-sky color="#ECECEC"></a-sky>
+ </a-scene>
+<!-- start JQuery to load GIF -->
+   <script>
+      var j = "shader:gif;src:url(https://media.giphy.com/media/3oz8xOvhnSpVOs9xza/giphy.gif)"
+      document.querySelector('a-box').setAttribute('material',j)
+
+   </script>
+
+</body>

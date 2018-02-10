@@ -62416,7 +62416,7 @@ AFRAME.registerComponent("arjs-anchor", {
                 arProfile.defaultMarkerParameters.markersAreaEnabled = false
             }else if (_this.data.preset === "W") {
                 arProfile.defaultMarkerParameters.type = "pattern";
-                arProfile.defaultMarkerParameters.patternUrl = "https://raw.githubusercontent.com/mrturck/wiskar/master/patterns/w.patt";
+                arProfile.defaultMarkerParameters.patternUrl = "https://raw.githubusercontent.com/mrturck/wiskar/master/patterns/w3.patt";
                 arProfile.defaultMarkerParameters.markersAreaEnabled = false
             }else {}
             var arSession = arjsSystem._arSession;

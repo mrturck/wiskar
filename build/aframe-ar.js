@@ -62414,6 +62414,10 @@ AFRAME.registerComponent("arjs-anchor", {
                 arProfile.defaultMarkerParameters.type = "pattern";
                 arProfile.defaultMarkerParameters.patternUrl = "https://raw.githubusercontent.com/mrturck/everywhare/master/pattern-marker.patt";
                 arProfile.defaultMarkerParameters.markersAreaEnabled = false
+            }else if (_this.data.preset === "W") {
+                arProfile.defaultMarkerParameters.type = "pattern";
+                arProfile.defaultMarkerParameters.patternUrl = "https://raw.githubusercontent.com/mrturck/wiskar/master/patterns/w.patt";
+                arProfile.defaultMarkerParameters.markersAreaEnabled = false
             }else {}
             var arSession = arjsSystem._arSession;
             var arAnchor = _this._arAnchor = new ARjs.Anchor(arSession, arProfile.defaultMarkerParameters);

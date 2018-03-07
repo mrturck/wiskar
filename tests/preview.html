@@ -25,18 +25,19 @@
     <a-scene  embedded="" scrolling="yes" class="" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" style="height:935px; position:absolute">
 			<a-entity camera="userHeight: 1.6" universal-controls="movementEnabled: true">
 		       </a-entity>
-					 <a-gradient-sky material="shader: gradient; topColor: 255 255 255; exponent:.3;bottomColor: 0 201 255;"></a-gradient-sky>
-		       <!-- Ocean -->
-					 <a-ocean material="metalness:1;side:back;emissive:#02fde0" width="50" depth="50" density="40"></a-ocean>
+           <a-gltf-model position="-3 2 0" src="busterDrone/busterDrone.gltf"></a-gltf-model>
+           <a-plane side="double" scale="2 2 2" rotation="0 0 0" color="#4CC3D9">
+             <a-animation attribute="position"
+                      dur="2000"
 
-		       <!-- Pedestals -->
-		       <a-cylinder radius="1" height="50" color="#39BB82" position="0 -24.5 0"></a-cylinder>
-		       <a-cylinder radius="1" height="50" color="#39BB82" position="5 -24.5 0"></a-cylinder>
-		       <a-cylinder radius="1" height="50" color="#39BB82" position="-5 -24.5 0"></a-cylinder>
-
-		       <!-- Lighting -->
-		       <a-entity light="type: hemisphere; color: #AAA; groundColor: #000000; intensity: 0.9;"></a-entity>
-		       <a-entity light="type: ambient; color: #174d9a; intensity: 0.5;"></a-entity>
+                      from="0 1 -3"
+                      to="0 2 -3"
+                      direction="alternate"
+                      easing="ease-out"
+                      repeat="indefinite"></a-animation>
+                    </a-plane>
+           <a-plane position="0 0 -4" src="mountains.jpg" rotation="-90 0 0" width="40" height="40" color="#fff"></a-plane>
+           <a-sky color="#ECECEC"></a-sky>
 			<div class="a-orientation-modal a-hidden" aframe-injected=""><button aframe-injected="">Exit VR</button></div>
 			<a-entity position="" data-aframe-default-camera="" camera="" aframe-injected="" scale="" visible=""></a-entity>
 			<a-entity light="" data-aframe-default-light="" aframe-injected="" position="" rotation="" scale="" visible=""></a-entity>

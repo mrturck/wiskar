@@ -21,8 +21,9 @@
 
       <div>
   <div class="col-lg-6" style="height:800px;width:800px">
-    <a-scene embedded scrolling="yes">
-      
+    <a-scene embedded="" scrolling="yes" class="" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" >
+      <a-entity camera="userHeight: 1.6" universal-controls="movementEnabled: true">
+		       </a-entity>
       <a-gltf-model position="-3 2 0" src="busterDrone/busterDrone.gltf"></a-gltf-model>
       <a-plane side="double" scale="2 2 2" rotation="0 0 0" color="#4CC3D9">
         <a-animation attribute="position"
@@ -36,6 +37,7 @@
                </a-plane>
       <a-plane position="0 0 -4" src="mountains.jpg" rotation="-90 0 0" width="40" height="40" color="#fff"></a-plane>
       <a-sky color="#ECECEC"></a-sky>
+      <a-entity position="" data-aframe-default-camera="" camera="" aframe-injected="" scale="" visible=""></a-entity>
     </a-scene>
   </div>
   <div>

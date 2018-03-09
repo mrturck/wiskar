@@ -1,4 +1,4 @@
-var data = '{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"plane","properties":{"color":"#7BC8A4","position":"0 0 -4","width":"4","height":"4"}},"object2":{"name":"sky","geometry":"sky","properties":{"src":"../test/mountains.jpg"}}}}'
+var data = '{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"plane","properties":{"color":"#7BC8A4","position":"0 0 -4","width":"4","height":"4"}},"object2":{"name":"sky","geometry":"sky","properties":{"src":"../tests/mountains.jpg"}}}}'
 var json = JSON.parse(data)
 
 // scene element

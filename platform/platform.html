@@ -3,11 +3,40 @@
     <title>Wiskar Platform (in progress)</title>
     <meta name="description" content="Wiskar platform">
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style> a-scene {max-height:500px;max-width: 100%}</style>
+<!-- experimental -->
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.rawgit.com/zcanter/aframe-gradient-sky/master/dist/gradientsky.min.js"></script>
+
+
   </head>
+
   <body>
 
-    <a-scene embedded>
-      <script src="prototype.js"></script>
-    </a-scene>
+    <div>
+    <button type="button" onclick="m()">Click Me!</button>
+    </div>
+
+    <div class="col-lg-6">
+
+      <a-scene  embedded=""   >
+        <a-entity camera="userHeight: 1.6" universal-controls="movementEnabled: true"></a-entity>
+        <!-- <a-entity position="" data-aframe-default-camera="" camera="" aframe-injected="" scale="" visible=""></a-entity>
+        <a-entity light="" data-aframe-default-light="" aframe-injected="" position="" rotation="" scale="" visible=""></a-entity>
+        <a-entity light="" position="" data-aframe-default-light="" aframe-injected="" rotation="" scale="" visible=""></a-entity> -->
+      </a-scene>
+
+    </div>
+
   </body>
+  <script src="prototype.js"></script>
+  <script>
+  function m() {
+  var newJson= '{"object3":{"name":"sphere","geometry":"sphere","properties":{"color":"#ff0000","position":"0 3 -4","radius":"2"}}}'
+  renderScene(JSON.parse(newJson))
+}
+</script>
+</div>
+
 </html>

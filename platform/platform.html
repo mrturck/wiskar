@@ -20,11 +20,11 @@
 
     <div class="col-lg-6">
 
-      <a-scene  embedded=""   >
+      <a-scene  embedded=""  class="" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" >
         <a-entity camera="userHeight: 1.6" universal-controls="movementEnabled: true"></a-entity>
-        <!-- <a-entity position="" data-aframe-default-camera="" camera="" aframe-injected="" scale="" visible=""></a-entity>
+        <a-entity position="" data-aframe-default-camera="" camera="" aframe-injected="" scale="" visible=""></a-entity>
         <a-entity light="" data-aframe-default-light="" aframe-injected="" position="" rotation="" scale="" visible=""></a-entity>
-        <a-entity light="" position="" data-aframe-default-light="" aframe-injected="" rotation="" scale="" visible=""></a-entity> -->
+        <a-entity light="" position="" data-aframe-default-light="" aframe-injected="" rotation="" scale="" visible=""></a-entity>
       </a-scene>
 
     </div>
@@ -32,6 +32,8 @@
   </body>
   <script src="prototype.js"></script>
   <script>
+  initEmptyScene()
+  
   function m() {
   var newJson= '{"object3":{"name":"sphere","geometry":"sphere","properties":{"color":"#ff0000","position":"0 3 -4","radius":"2"}}}'
   renderScene(JSON.parse(newJson))

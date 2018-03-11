@@ -27,7 +27,7 @@
       </a-scene>
 
     </div>
-    <div style="height:50%"></div>
+    <div id="np" style="height:50%"></div>
 
   </body>
   <script src="prototype.js"></script>
@@ -40,8 +40,8 @@
       z = z+1
       document.getElementById("camera").setAttribute("position","0 3 "+z)
   }
-
-  var options= {"color":"#ff0000"}
+  var np = document.getElementById("np")
+  var options= {"color":"#ff0000","zone":"np"}
    var manager = nipplejs.create(options);
 
 

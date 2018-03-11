@@ -7,14 +7,16 @@
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
     <script src="prototype.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="../lib/nipplejs/dist/nipple.min.js"></script>
+
   </head>
 
   <body>
     <a-scene keyboard-shortcuts="" screenshot="" vr-mode-ui="">
-      <a-entity id="camera" camera="userHeight: 1.6" look-controls wasd-controls cursor="rayOrigin: mouse"></a-entity>
+      <a-entity id="camera" camera="userHeight: 1.6" look-controls wasd-controls="fly: true" cursor="rayOrigin: mouse"></a-entity>
     </a-scene>
   </body>
 
 </html>
 
-<script> initEmptyScene(); createBox("0 .5 -4");</script>
+<script> initEmptyScene(); createBox("0 .5 -4");var manager = nipplejs.create(options);</script>

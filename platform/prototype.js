@@ -25,34 +25,33 @@ function dynamicallyLoadScript(url) {
 var scene;
 
 function renderScene(d) {
-    var scene = document.querySelector("a-scene")
+  var scene = document.querySelector("a-scene")
 
-    // loop through all objects
-    var objKeys = Object.keys(d)
-    for (x in objKeys) {
+  // loop through all objects
+  var objKeys = Object.keys(d)
+  for (x in objKeys) {
 
-      // create a-frame element
-      geo = d[objKeys[x]].geometry
-      el = document.createElement(processGeo(geo))
-      scene.appendChild(el)
+    // create a-frame element
+    geo = d[objKeys[x]].geometry
+    el = document.createElement(processGeo(geo))
+    scene.appendChild(el)
 
-      // set a-frame element properties
-      p = d[objKeys[x]].properties
-      propKeys = Object.keys(p)
-      // console.log(propKeys);
-      for (y in propKeys) {
-        el.setAttribute(propKeys[y], p[propKeys[y]])
-        // console.log(propKeys[y])
-        // console.log(p[propKeys[y]])
-        }
+    // set a-frame element properties
+    p = d[objKeys[x]].properties
+    propKeys = Object.keys(p)
+    // console.log(propKeys);
+    for (y in propKeys) {
+      el.setAttribute(propKeys[y], p[propKeys[y]])
+      // console.log(propKeys[y])
+      // console.log(p[propKeys[y]])
       }
     }
+  }
 
 // inits empty scene: plane and sky
-
 function initEmptyScene() {
   scene= document.querySelector("a-scene")
-  var sd = JSON.parse('{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"plane","properties":{"src":"graph.jpg","position":"0 0 -4","rotation":"-90 0 0","width":"8","height":"8"}},"object2":{"name":"sky","geometry":"sky","properties":{"color":"#dddddd"}}}}').sceneData;
+  var sd = JSON.parse('{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"plane","properties":{"src":"graph.jpg","position":"0 0 -4","rotation":"-90 0 0","width":"8","height":"8"}},"object2":{"name":"sky","geometry":"sky","properties":{"src":"../tests/mountains.jpg"}}}}').sceneData;
   renderScene(sd)
 }
 
@@ -63,7 +62,6 @@ function processGeo(geo) {
 }
 
 //function to create new boxes on click
-
   function createBox(point) {
     el = document.createElement("a-box");
     scene.appendChild(el);
@@ -72,7 +70,7 @@ function processGeo(geo) {
     el.setAttribute('color',getRandomColor());
     el.setAttribute('event-set__leave','_event: mouseleave; color:'+getRandomColor())
     el.setAttribute('event-set__enter','_event: mouseenter; color: #026fc9')
-    el.addEventListener('mousedown', function (evt) {
+    el.addEventListener('mouseup', function (evt) {
         point = getNewPos(evt)
           console.log(evt.detail.intersection.face.normal);
           console.log(evt.detail.intersection.object.parent.position);
@@ -80,6 +78,7 @@ function processGeo(geo) {
         createBox(point);
       })
   }
+
 // get new position for side by side block
 function getNewPos(evt) {
   p =
@@ -91,16 +90,16 @@ function getNewPos(evt) {
   z = (1*norm["z"] + 1*position["z"]).toString();
 
   p = x + " " + y + " " + z
-  console.log(p)
 
   return p;
 }
+
 // get hex for random color
   function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+      }
+    return color;
   }
-  return color;
-}

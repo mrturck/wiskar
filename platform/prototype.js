@@ -25,7 +25,7 @@ function dynamicallyLoadScript(url) {
 var scene;
 
 function renderScene(d) {
-  var scene = document.querySelector("a-scene")
+  scene = document.querySelector("a-scene")
 
   // loop through all objects
   var objKeys = Object.keys(d)

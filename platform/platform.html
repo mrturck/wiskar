@@ -64,8 +64,8 @@
     y_vec = Math.sin(ang + 3.14/180*cam.getAttribute('rotation')['y']) ;
 
     document.getElementById("data").innerHTML = x_vec + " " + y_vec;
-    x = cam.getAttribute("position")["x"] + f/30*(x_vec ) ;
-    y = cam.getAttribute("position")["z"] - f/30*(y_vec ) ;
+    x = cam.getAttribute("position")["x"] + f/15*(x_vec ) ;
+    y = cam.getAttribute("position")["z"] - f/15*(y_vec ) ;
 
     cam.setAttribute("position",x + " " + "1.6 " + y)
     console.log(cam.getAttribute('position'))

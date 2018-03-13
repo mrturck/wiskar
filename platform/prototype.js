@@ -51,7 +51,7 @@ function renderScene(d) {
 // inits empty scene: plane and sky
 function initEmptyScene() {
   scene= document.querySelector("a-scene")
-  var sd = JSON.parse('{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"plane","properties":{"src":"graph.jpg","position":"0 0 -4","rotation":"-90 0 0","width":"8","height":"8"}},"object2":{"name":"sky","geometry":"sky","properties":{"src":"../tests/mountains.jpg"}}}}').sceneData;
+  var sd = JSON.parse('{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"plane","properties":{"src":"graph.jpg","position":"0 0 -4","rotation":"-90 0 0","width":"8","height":"8"}},"object2":{"name":"sky","geometry":"sky","properties":{"color":"#bbbbbb"}}}}').sceneData;
   renderScene(sd)
 }
 

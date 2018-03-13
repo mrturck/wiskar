@@ -68,9 +68,9 @@ function processGeo(geo) {
     el.setAttribute('position',point)
     el.setAttribute('scale','1 1 1')
     el.setAttribute('color',getRandomColor());
-    el.setAttribute('event-set__leave','_event: mouseleave; color:'+getRandomColor())
-    el.setAttribute('event-set__enter','_event: mouseenter; color: #026fc9')
-    el.addEventListener('mouseup', function (evt) {
+    // el.setAttribute('event-set__leave','_event: mouseleave; color:'+getRandomColor())
+    // el.setAttribute('event-set__enter','_event: mouseenter; color: #026fc9')
+    el.addEventListener('mousedown', function (evt) {
         point = getNewPos(evt)
           console.log(evt.detail.intersection.face.normal);
           console.log(evt.detail.intersection.object.parent.position);

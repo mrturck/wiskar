@@ -62,8 +62,8 @@ function processGeo(geo) {
 }
 
 //function to create new boxes on click
-  function createBox(point) {
-    el = document.createElement("a-box");
+  function createBox(point, shape="a-box") {
+    el = document.createElement(shape);
     scene.appendChild(el);
     el.setAttribute('position',point)
     el.setAttribute('scale','1 1 1')

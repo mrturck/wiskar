@@ -4,7 +4,21 @@
     <meta name="description" content="Wiskar platform">
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style> a-scene {max-height:500px;max-width: 100%}</style>
+    <style>
+    a-scene {max-height:500px;max-width: 100%}
+    .overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: block;/* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 20px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+
+}</style>
 <!-- experimental -->
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.rawgit.com/zcanter/aframe-gradient-sky/master/dist/gradientsky.min.js"></script>
@@ -19,15 +33,15 @@
 
     <div class="col-lg-6">
 
-      <a-scene  embedded=""  class="" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" >
-        <a-entity id="camera" camera="userHeight: 1.6" universal-controls="movementEnabled: true"></a-entity>
+      <a-scene   vr-mode-ui="enabled: false" >
+        <a-entity id="camera" camera="userHeight: 1.6" universal-controls="movementEnabled: true" cursor="rayOrigin: mouse"></a-entity>
         <a-entity position="" data-aframe-default-camera="" camera="" aframe-injected="" scale="" visible=""></a-entity>
         <a-entity light="" data-aframe-default-light="" aframe-injected="" position="" rotation="" scale="" visible=""></a-entity>
         <a-entity light="" position="" data-aframe-default-light="" aframe-injected="" rotation="" scale="" visible=""></a-entity>
       </a-scene>
 
     </div>
-    <div id="np" style="height:50%; color: #00f000; position: relative">
+    <div id="np" class="overlay">
     <h1 id="data"></h1></div>
 
   </body>

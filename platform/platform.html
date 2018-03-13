@@ -58,17 +58,19 @@
     console.log(data);
     f = data.force;
     ang = data.angle.radian
+    cam = document.getElementById("camera");
 
-    x_vec = Math.cos(ang) * f/30;
-    y_vec = Math.sin(ang) * f/30;
+    x_vec = Math.cos(ang + 3.14/180*cam.getAttribute('rotation')['y']) ;
+    y_vec = Math.sin(ang + 3.14/180*cam.getAttribute('rotation')['y']) ;
 
     document.getElementById("data").innerHTML = x_vec + " " + y_vec;
-    cam = document.getElementById("camera");
-    x = cam.getAttribute("position")["x"] + x_vec;
-    y = cam.getAttribute("position")["z"] - y_vec;
+    x = cam.getAttribute("position")["x"] + f/30*(x_vec ) ;
+    y = cam.getAttribute("position")["z"] - f/30*(y_vec ) ;
 
     cam.setAttribute("position",x + " " + "1.6 " + y)
     console.log(cam.getAttribute('position'))
+    console.log(cam.getAttribute('rotation'))
+
   }
 </script>
 </div>

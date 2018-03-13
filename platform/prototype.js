@@ -70,7 +70,7 @@ function processGeo(geo) {
     el.setAttribute('color',getRandomColor());
     el.setAttribute('event-set__leave','_event: mouseleave; color:'+getRandomColor())
     el.setAttribute('event-set__enter','_event: mouseenter; color: #026fc9')
-    el.addEventListener('mousedown', function (evt) {
+    el.addEventListener('mouseup', function (evt) {
         point = getNewPos(evt)
           console.log(evt.detail.intersection.face.normal);
           console.log(evt.detail.intersection.object.parent.position);

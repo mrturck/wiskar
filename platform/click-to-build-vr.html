@@ -6,17 +6,62 @@
     <meta name="description" content="Mouse Click Example - A-Frame">
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
     <script src="prototype.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
     <script src="../lib/nipplejs.min.js"></script>
-
+    <style> a-scene {height:600px;max-width: 100%}</style>
   </head>
 
   <body>
-    <a-scene keyboard-shortcuts="" screenshot="" vr-mode-ui="">
+
+    <div class="col-lg-6">
+    <a-scene embedded="" keyboard-shortcuts="" screenshot="" vr-mode-ui="">
       <a-entity id="camera" camera="userHeight: 1.6" look-controls wasd-controls="fly: true" cursor="rayOrigin: mouse"></a-entity>
     </a-scene>
+  </div>
+
+    <div id="np" style="height:500px; color: #00f000; position: relative"></div>
+
   </body>
 
 </html>
 
-<script> initEmptyScene(); createBox("0 .5 -4");var manager = nipplejs.create(options);</script>
+<script> initEmptyScene(); createBox("0 .5 -4");
+
+var options= {
+  zone: document.getElementById('np'),
+  color: "#00ff00"
+}
+
+ var manager = nipplejs.create(options);
+ bindNipple();
+
+ function bindNipple () {
+             manager.on('move', function (evt, data) {
+                 debug(data);
+             });
+           }
+var f; var ang; var x_vec; var y_vec; var cam;
+
+function debug(data) {
+  console.log(data);
+  f = data.force;
+  ang = data.angle.radian
+
+  x_vec = Math.cos(ang) * f/30;
+  y_vec = Math.sin(ang) * f/30;
+
+  // document.getElementById("data").innerHTML = x_vec + " " + y_vec;
+  cam = document.getElementById("camera");
+  x = cam.getAttribute("position")["x"] + x_vec;
+  y = cam.getAttribute("position")["z"] - y_vec;
+
+  cam.setAttribute("position",x + " " + "1.6 " + y)
+  console.log(cam.getAttribute('position'))
+}
+
+
+
+
+</script>

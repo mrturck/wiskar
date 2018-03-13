@@ -33,7 +33,7 @@ function renderScene(d) {
 
     // create a-frame element
     geo = d[objKeys[x]].geometry
-    el = document.createElement(processGeo(geo))
+    el = document.createElement(geo)
     scene.appendChild(el)
 
     // set a-frame element properties
@@ -44,6 +44,7 @@ function renderScene(d) {
       el.setAttribute(propKeys[y], p[propKeys[y]])
       // console.log(propKeys[y])
       // console.log(p[propKeys[y]])
+      addClickListener(el)
       }
     }
   }
@@ -51,7 +52,7 @@ function renderScene(d) {
 // inits empty scene: plane and sky
 function initEmptyScene() {
   scene= document.querySelector("a-scene")
-  var sd = JSON.parse('{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"plane","properties":{"src":"graph.jpg","position":"0 0 -4","rotation":"-90 0 0","width":"8","height":"8"}},"object2":{"name":"sky","geometry":"sky","properties":{"color":"#bbbbbb"}}}}').sceneData;
+  var sd = JSON.parse('{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"a-plane","properties":{"src":"graph.jpg","position":"0 0 -4","rotation":"-90 0 0","width":"8","height":"8"}},"object2":{"name":"sky","geometry":"a-sky","properties":{"color":"#bbbbbb"}}}}').sceneData;
   renderScene(sd)
 }
 
@@ -60,7 +61,19 @@ function initEmptyScene() {
 function processGeo(geo) {
   return "a-"+geo
 }
+// add click Listener
+function addClickListener(el) {
+  el.setAttribute('event-set__leave','_event: mouseleave; color:'+getRandomColor())
+  el.setAttribute('event-set__enter','_event: mouseenter; color: #026fc9')
+  el.addEventListener('mouseup', function (evt) {
+      point = getNewPos(evt)
+        console.log(evt.detail.intersection.face.normal);
+        console.log(evt.detail.intersection.object.parent.position);
+       //console.log(point)
+      createBox(point);
+    })
 
+}
 //function to create new boxes on click
   function createBox(point, shape="a-box") {
     el = document.createElement(shape);
@@ -70,13 +83,7 @@ function processGeo(geo) {
     el.setAttribute('color',getRandomColor());
     el.setAttribute('event-set__leave','_event: mouseleave; color:'+getRandomColor())
     el.setAttribute('event-set__enter','_event: mouseenter; color: #026fc9')
-    el.addEventListener('mouseup', function (evt) {
-        point = getNewPos(evt)
-          console.log(evt.detail.intersection.face.normal);
-          console.log(evt.detail.intersection.object.parent.position);
-         //console.log(point)
-        createBox(point);
-      })
+    addClickListener(el);
   }
 
 // get new position for side by side block
@@ -93,6 +100,91 @@ function getNewPos(evt) {
 
   return p;
 }
+// init AWS initAWScreds
+var dynamodb;
+function initAWScreds() {
+  var user_credentials = {
+          accessKeyId: 'AKIAIFJVJ7YGAFSVBL2Q',
+          secretAccessKey: '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'
+  };
+  AWS.config.region = 'us-east-1';
+  AWS.config.update(user_credentials);
+
+  dynamodb = new AWS.DynamoDB.DocumentClient();
+}
+var newData;
+
+// fetch scene from Wiskar DynamoDB by id #
+function fetchSceneById(id) {
+initAWScreds();
+var id = id;
+var newData;
+var params = {
+    TableName : "wiskar",
+    KeyConditionExpression: "#projectId = :proj",
+    ExpressionAttributeNames:{
+       "#projectId": "projectId"
+    },
+    ExpressionAttributeValues: {
+       ":proj":id
+    }
+ };
+ dynamodb.query(params, function(err, data) {
+if (err) {
+  //output error message if query failed
+  console.log('Unable to query');
+}
+else {
+  newData = data;
+  console.log(data)
+  jsontovr(data)
+}
+})
+}
+
+// turn json into vr scene
+function jsontovr(data) {
+  console.log(data)
+ var s = JSON.stringify(data.Items[0].data)
+var t = JSON.stringify(s)
+console.log(t)
+renderScene(data.Items[0].data)
+}
+
+// attempting to save VR scene to json
+function SaveMyScene() {
+
+  scene = document.querySelector("a-scene")
+  var s = new Object();
+  s.user = "Tester"
+  s.projectId = Math.floor(Math.random()*1000000000);
+    s.data = new Object();
+    for (i in scene.children) {
+      if (scene.children[i].localName == "a-box") {
+        s.data['object'+i] = new Object();
+        s.data['object'+i].geometry = scene.children[i].localName;
+        s.data['object'+i].properties = new Object();
+          s.data['object'+i].properties.position = scene.children[i].object3D.position["x"] + " " + scene.children[i].object3D.position["y"] + " "+ scene.children[i].object3D.position["z"];
+          s.data['object'+i].properties.color = "#" + scene.children[i].outerHTML.match(/[A-Fa-f0-9]{6}/)
+      }
+      }
+    initAWScreds();
+    dynamodb = new AWS.DynamoDB.DocumentClient();
+    var params = {
+        TableName : "wiskar",
+        Item: s
+        }
+    dynamodb.put(params, function(err, data) {
+      if (err) console.log(err, err.stack); // an error occurred
+      else     console.log(data);           // successful response
+    });
+
+    // t = JSON.stringify(s)
+    // console.log(t)
+    // console.log(JSON.parse(t))
+}
+
+
 
 // get hex for random color
   function getRandomColor() {

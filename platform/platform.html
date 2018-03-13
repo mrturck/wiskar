@@ -4,6 +4,8 @@
     <meta name="description" content="Wiskar platform">
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.5.4.min.js"></script>
+
     <style>
     a-scene {max-height:500px;max-width: 100%}
     .overlay {
@@ -47,8 +49,8 @@
   </body>
   <script src="prototype.js"></script>
   <script>
-  initEmptyScene()
-
+  // initEmptyScene()
+  fetchSceneById(123);
   function m() {
     var newJson= '{"object3":{"name":"sphere","geometry":"sphere","properties":{"color":"#ff0000","position":"0 3 -4","radius":"2"}}}'
     renderScene(JSON.parse(newJson))

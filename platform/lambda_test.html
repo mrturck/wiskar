@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Test Lambda</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.5.4.min.js"></script>
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+
+    <script src="prototype.js"></script>
+  </head>
+  <body>
+    <div id="test" style="height:50px">Hello</div>
+    <a-scene   vr-mode-ui="enabled: false" >
+      <a-entity id="camera" camera="userHeight: 1.6" wasd-controls universal-controls="movementEnabled: true" cursor="rayOrigin: mouse"></a-entity>
+      <a-entity position="" data-aframe-default-camera="" camera="" aframe-injected="" scale="" visible=""></a-entity>
+      <a-entity light="" data-aframe-default-light="" aframe-injected="" position="" rotation="" scale="" visible=""></a-entity>
+      <a-entity light="" position="" data-aframe-default-light="" aframe-injected="" rotation="" scale="" visible=""></a-entity>
+    </a-scene>
+
+    <script>fetchSceneById(124)</script>
+  </body>
+</html>

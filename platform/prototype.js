@@ -44,7 +44,10 @@ function renderScene(d) {
       el.setAttribute(propKeys[y], p[propKeys[y]])
       // console.log(propKeys[y])
       // console.log(p[propKeys[y]])
+      if (el.tagName == "A-BOX") {
+
       addClickListener(el)
+    }
       }
     }
   }
@@ -63,12 +66,12 @@ function processGeo(geo) {
 }
 // add click Listener
 function addClickListener(el) {
-  el.setAttribute('event-set__leave','_event: mouseleave; color:'+getRandomColor())
+  el.setAttribute('event-set__leave','_event: mouseleave; color:'+ el.getAttribute('color'))
   el.setAttribute('event-set__enter','_event: mouseenter; color: #026fc9')
   el.addEventListener('mouseup', function (evt) {
       point = getNewPos(evt)
-        console.log(evt.detail.intersection.face.normal);
-        console.log(evt.detail.intersection.object.parent.position);
+        // console.log(evt.detail.intersection.face.normal);
+        // console.log(evt.detail.intersection.object.parent.position);
        //console.log(point)
       createBox(point);
     })
@@ -81,9 +84,8 @@ function addClickListener(el) {
     el.setAttribute('position',point)
     el.setAttribute('scale','1 1 1')
     el.setAttribute('color',getRandomColor());
-    el.setAttribute('event-set__leave','_event: mouseleave; color:'+getRandomColor())
-    el.setAttribute('event-set__enter','_event: mouseenter; color: #026fc9')
     addClickListener(el);
+
   }
 
 // get new position for side by side block
@@ -144,11 +146,7 @@ else {
 
 // turn json into vr scene
 function jsontovr(data) {
-  console.log(data)
- var s = JSON.stringify(data.Items[0].data)
-var t = JSON.stringify(s)
-console.log(t)
-renderScene(data.Items[0].data)
+  renderScene(data.Items[0].data)
 }
 
 // attempting to save VR scene to json

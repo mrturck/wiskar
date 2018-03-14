@@ -200,7 +200,7 @@ else {
 
 // turn json into vr scene
 function jsontovr(data) {
-  renderScene(data.Items[0].data)
+  renderScene(data.Items[0].data,"AR")
 }
 
 // attempting to save VR scene to json

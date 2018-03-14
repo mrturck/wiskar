@@ -245,12 +245,7 @@ function SaveMyScene() {
               }             // successful response
             });
 
-    // t = JSON.stringify(s)
-    // console.log(t)
-    // console.log(JSON.parse(t))
 }
-
-
 
 // get hex for random color
   function getRandomColor() {

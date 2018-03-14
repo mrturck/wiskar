@@ -7,18 +7,259 @@
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
     <script src="prototype.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
-    <script src="../lib/nipplejs.min.js"></script>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.5.4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../src/css/studio-style.css">
+    <script src='../lib/spectrum.js'></script>
+    <link rel="stylesheet" type="text/css" href='../lib/spectrum.css' />
 
 
   </head>
 
   <body>
-    <a-scene keyboard-shortcuts="" screenshot="" vr-mode-ui="">
-      <a-entity id="camera" camera="userHeight: 1.6" look-controls wasd-controls="fly: true" cursor="rayOrigin: mouse"></a-entity>
-    </a-scene>
+
+    <div id="wrapper">
+    <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                        Wiskar Studio
+                    </a>
+                </li>
+
+                <li>
+                    <a id="shapeContainer" data-toggle="collapse" href="#shapeCtn">Shape</a>
+                    <div id="shapeCtn" class="collapse in">
+                      <a href="#" id="box" class="btn active">box</a>
+                      <a href="#" id="sphere" class="btn">sphere</a>
+                      <a href="#" id="donut" class="btn">donut</a>
+                      <a href="#" id="cylinder" class="btn">cylinder</a>
+
+                    </div>
+                </li>
+
+                <li>
+                  <a id="colorContainer" data-toggle="collapse" href="#colorCtn">Color</a>
+                  <div id="colorCtn" class="collapse in">
+                    <a href="#" id="choose" class="btn">choose  <input type='text' id="custom" /></a></input></a>
+                    <a href="#" id="randomC" class="btn active">random</a>
+                  </div>
+                </li>
+
+                <li>
+                  <a id="backgroundContainer" data-toggle="collapse" href="#backgroundCtn">Background</a>
+                  <div id="backgroundCtn" class="collapse in">
+                    <a href="#" id="water" class="btn active">water</a>
+                    <a href="#" id="clouds" class="btn">sky</a>
+                    <a href="#" id="random" class="btn">random</a>
+                  </div>
+
+
+                </li>
+                <li>
+                    <a data-toggle="modal" href="#exampleModal">About</a>
+                </li>
+                <li>
+                    <a id="load" data-toggle="modal" href="#loadModal">Load Scene</a>
+                </li>
+                <li>
+                    <a class="alert" id="save" data-toggle="modal" href="#saveModal">Save Scene</a>
+                </li>
+                <li>
+                    <a class="alert" id="restart" data-toggle="modal" href="#restartModal">Start over</a>
+                </li>
+            </ul>
+        </div>
+        <div >
+          <a-scene  keyboard-shortcuts="" screenshot="" vr-mode-ui="enabled:false">
+            <a-entity id="camera" camera="userHeight: 1.6" look-controls wasd-controls="fly: true" cursor="rayOrigin: mouse"></a-entity>
+          </a-scene>
+        </div>
+      </div>
+
+      <!-- about modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- save modal -->
+    <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Confirm Save</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Your scene ID will be:
+          <input type="text" class="form-control" id="sceneID" disabled="" value="">
+          Give your scene a name (optional):
+          <input type="text" class="form-control" id="sceneName">
+          <input type="text" class="form-control" id="save-confirm" disabled="" value="Successfully Saved Scene" style="display:none">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="save-button" class="btn btn-primary">Save Scene</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- start over modal -->
+  <div class="modal fade" id="restartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- load modal -->
+<div class="modal fade" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle">Load by scene ID number</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="text" class="form-control" id="sceneNum">Scene ID </input>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      <button type="button" onclick="fetchScene()" class="btn btn-primary">Load scene</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ui functions -->
+<script>
+// change building shape
+$('#box').click(function(){ setShape("a-box"); return false; });
+$('#sphere').click(function(){ setShape("a-sphere"); return false; });
+$('#donut').click(function(){ setShape("a-torus"); return false; });
+$('#cylinder').click(function(){ setShape("a-cylinder"); return false; });
+
+function setShape(shape) {
+  sh = shape;
+}
+
+// change color
+$("#custom").spectrum({ color: "#0000ff", preferredFormat: "hex",move: function(tinycolor) { hex("a")}})
+$("#custom").on('change.spectrum', function(e, tinycolor) {hex("a") })
+
+
+$('#choose').click(function(){ setColor(hex("a")); console.log(hex); return false; });
+$('#randomC').click(function(){ setColor("random"); return false; });
+
+function hex() {
+var hex = $("#custom").spectrum("get").toHexString();
+return hex
+}
+
+// change background
+$("#picker").spectrum("get");
+$('#clouds').click(function(){ backgroundClick("clouds"); return false; });
+$('#water').click(function(){ backgroundClick("water"); return false; });
+$('#random').click(function(){ colorBackground(); return false; });
+
+// $('#save').click(function(){setSceneId(); return false;});
+$('#save-button').click(function(){SaveMyScene(); return false;});
+$( "#saveModal" ).on('shown.bs.modal', function(e) {
+  var num = Math.floor(Math.random()*1000000000);
+  console.log(num)
+  document.getElementById("sceneID").setAttribute("value",num);
+});
+$(document).on('hidden.bs.modal', '#saveModal', function(e) {
+  document.getElementById("save-confirm").setAttribute("style","display:none");
+  document.getElementById("save-button").removeAttribute("disabled");
+})
+
+function backgroundClick(background) {
+  document.querySelector("a-sky").setAttribute("color","")
+  document.querySelector("a-sky").setAttribute("src","../img/"+background+".jpg")
+}
+function colorBackground() {
+  document.querySelector("a-sky").setAttribute("src","")
+  document.querySelector("a-sky").setAttribute("color",getRandomColor())
+}
+
+// active class
+lists = ["shapeCtn","colorCtn","backgroundCtn"]
+var header1 = document.getElementById("shapeCtn");
+var btns = header1.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+    var current = header1.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+
+var header2 = document.getElementById("colorCtn");
+var btns = header2.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+    var current = header2.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+
+var header3 = document.getElementById("backgroundCtn");
+var btns = header3.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+    var current = header3.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+
+function fetchScene() {
+  var id = 1*document.getElementById("sceneNum").value;
+  fetchSceneById(id)
+}
+
+</script>
+
+
   </body>
 
 </html>
 
-<script> initEmptyScene(); createBox("0 .5 -4","a-box");</script>
+<script> initEmptyScene(); setColor("random"); createBox("0 .5 -4","a-box");</script>

@@ -23,8 +23,10 @@ function dynamicallyLoadScript(url) {
 
 // render a-frame scene from json data
 var scene;
+var sh="a-box";
+var clr;
 
-function renderScene(d) {
+function renderScene(d, r="VR") {
   scene = document.querySelector("a-scene")
 
   // loop through all objects
@@ -41,21 +43,56 @@ function renderScene(d) {
     propKeys = Object.keys(p)
     // console.log(propKeys);
     for (y in propKeys) {
+      if (propKeys[y] == "position" && r =="AR") {
+          el.setAttribute("scale",".1 .1 .1")
+          el.setAttribute("position", p["positionAR"])
+      }
+      else {
       el.setAttribute(propKeys[y], p[propKeys[y]])
+      // el.setAttribute("scale",".1 .1 .1") for AR
       // console.log(propKeys[y])
       // console.log(p[propKeys[y]])
       if (el.tagName == "A-BOX") {
 
       addClickListener(el)
-    }
+          }
+        }
       }
     }
   }
+// function renderScene(d) {
+//   scene = document.querySelector("a-scene")
+//
+//   // loop through all objects
+//   var objKeys = Object.keys(d)
+//   for (x in objKeys) {
+//
+//     // create a-frame element
+//     geo = d[objKeys[x]].geometry
+//     el = document.createElement(geo)
+//     scene.appendChild(el)
+//
+//     // set a-frame element properties
+//     p = d[objKeys[x]].properties
+//     propKeys = Object.keys(p)
+//     // console.log(propKeys);
+//     for (y in propKeys) {
+//       el.setAttribute(propKeys[y], p[propKeys[y]])
+//       // el.setAttribute("scale",".1 .1 .1") for AR
+//       // console.log(propKeys[y])
+//       // console.log(p[propKeys[y]])
+//       if (el.tagName == "A-BOX") {
+//
+//       addClickListener(el)
+//     }
+//       }
+//     }
+//   }
 
 // inits empty scene: plane and sky
 function initEmptyScene() {
   scene= document.querySelector("a-scene")
-  var sd = JSON.parse('{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"a-plane","properties":{"src":"graph.jpg","position":"0 0 -4","rotation":"-90 0 0","width":"8","height":"8"}},"object2":{"name":"sky","geometry":"a-sky","properties":{"color":"#bbbbbb"}}}}').sceneData;
+  var sd = JSON.parse('{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"a-plane","properties":{"shadow":"true","src":"graph.jpg","position":"0 0 -4","rotation":"-90 0 0","width":"8","height":"8"}},"object2":{"name":"sky","geometry":"a-sky","properties":{"src":"../img/water.jpg"}}}}').sceneData;
   renderScene(sd)
 }
 
@@ -73,17 +110,34 @@ function addClickListener(el) {
         // console.log(evt.detail.intersection.face.normal);
         // console.log(evt.detail.intersection.object.parent.position);
        //console.log(point)
-      createBox(point);
+      createBox(point, sh, clr);
     })
 
 }
+function setColor(hex) {
+  if ( hex == "random" ) {
+    clr="random";
+  }
+  else {
+    clr = hex;
+    console.log(clr)
+    return clr;
+  }
+  }
+
 //function to create new boxes on click
-  function createBox(point, shape="a-box") {
+  function createBox(point, shape="a-box", color=getRandomColor()) {
     el = document.createElement(shape);
     scene.appendChild(el);
     el.setAttribute('position',point)
     el.setAttribute('scale','1 1 1')
-    el.setAttribute('color',getRandomColor());
+    el.setAttribute('shadow','true')
+    console.log(clr)
+    if (color=="random") {
+    el.setAttribute('color',getRandomColor());}
+    else {
+      el.setAttribute('color',hex())
+    }
     addClickListener(el);
 
   }
@@ -155,14 +209,18 @@ function SaveMyScene() {
   scene = document.querySelector("a-scene")
   var s = new Object();
   s.user = "Tester"
-  s.projectId = Math.floor(Math.random()*1000000000);
+  s.timestamp = new Date().toJSON();
+  s.projectId = 1*document.getElementById("sceneID").value;
+  s.projectName = document.getElementById("sceneName").value;
     s.data = new Object();
     for (i in scene.children) {
-      if (scene.children[i].localName == "a-box") {
+      if (scene.children[i].localName == "a-box" || scene.children[i].localName == "a-sphere" || scene.children[i].localName == "a-torus" || scene.children[i].localName == "a-cylinder") {
         s.data['object'+i] = new Object();
         s.data['object'+i].geometry = scene.children[i].localName;
         s.data['object'+i].properties = new Object();
           s.data['object'+i].properties.position = scene.children[i].object3D.position["x"] + " " + scene.children[i].object3D.position["y"] + " "+ scene.children[i].object3D.position["z"];
+          s.data['object'+i].properties.positionAR = .1*scene.children[i].object3D.position["x"] + " " + .1*scene.children[i].object3D.position["y"] + " "+ .1*scene.children[i].object3D.position["z"];
+
           s.data['object'+i].properties.color = "#" + scene.children[i].outerHTML.match(/[A-Fa-f0-9]{6}/)
       }
       }
@@ -173,9 +231,19 @@ function SaveMyScene() {
         Item: s
         }
     dynamodb.put(params, function(err, data) {
-      if (err) console.log(err, err.stack); // an error occurred
-      else     console.log(data);           // successful response
-    });
+      if (err) {
+        document.getElementById("save-confirm").value="Something went wrong, please try again"
+        document.getElementById("save-confirm").setAttribute("style","display:block");
+        document.getElementById("save-confirm").className+=" save-failed"
+
+      } // an error occurred
+      else   {
+            document.getElementById("save-confirm").value="Save successful"
+            document.getElementById("save-confirm").setAttribute("style","display:block");
+            document.getElementById("save-confirm").className+=" save-success"
+
+              }             // successful response
+            });
 
     // t = JSON.stringify(s)
     // console.log(t)
@@ -187,9 +255,9 @@ function SaveMyScene() {
 // get hex for random color
   function getRandomColor() {
     var letters = '0123456789ABCDEF';
-    var color = '#';
+    var clr = '#';
     for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
+      clr += letters[Math.floor(Math.random() * 16)];
       }
-    return color;
+    return clr;
   }

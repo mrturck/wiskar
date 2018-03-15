@@ -25,6 +25,7 @@ function dynamicallyLoadScript(url) {
 var scene;
 var sh="a-box";
 var clr;
+var del;
 
 function renderScene(d, r="VR") {
   scene = document.querySelector("a-scene")
@@ -102,16 +103,21 @@ function processGeo(geo) {
   return "a-"+geo
 }
 // add click Listener
-function addClickListener(el) {
+function addClickListener(el,s=scene) {
   el.setAttribute('event-set__leave','_event: mouseleave; color:'+ el.getAttribute('color'))
   el.setAttribute('event-set__enter','_event: mouseenter; color: #026fc9')
   el.addEventListener('mouseup', function (evt) {
+    if (del=="1") {
+      s.appendChild(el)
+      s.removeChild(el)
+    }
+    else {
       point = getNewPos(evt)
         // console.log(evt.detail.intersection.face.normal);
         // console.log(evt.detail.intersection.object.parent.position);
        //console.log(point)
-      createBox(point, sh, clr);
-    })
+      createBox(point, sh, clr,del);
+    }})
 
 }
 function setColor(hex) {
@@ -126,7 +132,7 @@ function setColor(hex) {
   }
 
 //function to create new boxes on click
-  function createBox(point, shape="a-box", color=getRandomColor()) {
+  function createBox(point, shape="a-box", color=getRandomColor(),del) {
     el = document.createElement(shape);
     scene.appendChild(el);
     el.setAttribute('position',point)
@@ -171,7 +177,7 @@ function initAWScreds() {
 var newData;
 
 // fetch scene from Wiskar DynamoDB by id #
-function fetchSceneById(id) {
+function fetchSceneById(id,r="") {
 initAWScreds();
 var id = id;
 var newData;
@@ -193,14 +199,19 @@ if (err) {
 else {
   newData = data;
   console.log(data)
-  jsontovr(data)
+  jsontovr(data,r="")
 }
 })
 }
 
 // turn json into vr scene
-function jsontovr(data) {
+function jsontovr(data,r="") {
+  if (r=="AR") {
   renderScene(data.Items[0].data,"AR")
+}
+else {
+  renderScene(data.Items[0].data,r)
+}
 }
 
 // attempting to save VR scene to json

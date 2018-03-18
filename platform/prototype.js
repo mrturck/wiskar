@@ -47,8 +47,10 @@ function renderScene(d, r="VR") {
       if (propKeys[y] == "position" && r =="AR") {
           el.setAttribute("scale",".1 .1 .1")
           el.setAttribute("position", p["positionAR"])
+          console.log("reached AR")
       }
       else {
+        console.log("reached VR")
       el.setAttribute(propKeys[y], p[propKeys[y]])
       // el.setAttribute("scale",".1 .1 .1") for AR
       // console.log(propKeys[y])
@@ -199,7 +201,7 @@ if (err) {
 else {
   newData = data;
   console.log(data)
-  jsontovr(data,r="")
+  jsontovr(data,r)
 }
 })
 }

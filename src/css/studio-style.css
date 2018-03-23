@@ -3,6 +3,21 @@
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
  */
+
+ .joystick-overlay {
+ position: fixed; /* Sit on top of the page content */
+ display: block;/* Hidden by default */
+ margin:25px;
+ width: 150px; /* Full width (cover the whole page) */
+ height: 150px; /* Full height (cover the whole page) */
+ /* top: 0;
+ left: 0; */
+ right: 20px;
+ bottom: 20px;
+ background-color: rgba(200,200,200,.5); /* Black background with opacity */
+ z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+ }
+
  .overlay {
  position: fixed; /* Sit on top of the page content */
  display: block;/* Hidden by default */

@@ -6,28 +6,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.5.4.min.js"></script>
     <script src="prototype.js"></script>
-
-
-    <style>
-    a-scene {max-height:500px;max-width: 100%}
-    .joystick-overlay {
-    position: fixed; /* Sit on top of the page content */
-    display: block;/* Hidden by default */
-    margin:25px;
-    width: 150px; /* Full width (cover the whole page) */
-    height: 150px; /* Full height (cover the whole page) */
-    /* top: 0;
-    left: 0; */
-    right: 20px;
-    bottom: 20px;
-    background-color: rgba(200,200,200,.5); /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-
-}</style>
-<!-- experimental -->
-    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
-    <script src="https://cdn.rawgit.com/zcanter/aframe-gradient-sky/master/dist/gradientsky.min.js"></script>
     <script src="../lib/nipplejs.min.js"></script>
+    <link rel="stylesheet" href="../src/css/studio-style.css">
+    <script src="joystick.js"></script>
+
   </head>
 
   <body>
@@ -56,39 +38,8 @@
     var newJson= '{"object3":{"name":"sphere","geometry":"a-sphere","properties":{"color":"#ff0000","position":"0 3 -4","radius":"2"}}}'
     renderScene(JSON.parse(newJson))
   }
-  // mess around with joystick
-  var options= {
-    mode: 'dynamic',
-    zone: document.getElementById('np'),
-    color: "#00ff00"
-  }
+  createJoystick()
 
-   var manager = nipplejs.create(options);
-   bindNipple();
-
-   function bindNipple () {
-               manager.on('move', function (evt, data) {
-                   debug(data);
-               });
-             }
-  var f; var ang; var x_vec; var y_vec; var cam;
-  function debug(data) {
-
-    f = data.force;
-    ang = data.angle.radian
-    cam = document.getElementById("camera");
-
-    x_vec = Math.cos(ang + 3.14/180*cam.getAttribute('rotation')['y']) ;
-    y_vec = Math.sin(ang + 3.14/180*cam.getAttribute('rotation')['y']) ;
-
-    x = cam.getAttribute("position")["x"] + f/15*(x_vec ) ;
-    y = cam.getAttribute("position")["z"] - f/15*(y_vec ) ;
-
-    cam.setAttribute("position",x + " " + "1.6 " + y)
-
-
-  }
 </script>
 </div>
-
 </html>

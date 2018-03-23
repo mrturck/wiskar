@@ -60577,6 +60577,15 @@ THREEx.ArMarkerControls.prototype.dispose = function() {
 THREEx.ArMarkerControls.prototype.updateWithModelViewMatrix = function(modelViewMatrix) {
     var markerObject3D = this.object3d;
     markerObject3D.visible = true;
+
+    /// when marker is found!!
+    //var event = new Event('markerIsFound');
+    //console.log('found')
+    // Dispatch the event.
+    //  var visible = 1;
+
+
+
     if (this.context.parameters.trackingBackend === "artoolkit") {
         var tmpMatrix = (new THREE.Matrix4).copy(this.context._artoolkitProjectionAxisTransformMatrix);
         tmpMatrix.multiply(modelViewMatrix);
@@ -60833,7 +60842,7 @@ ARjs.Context = THREEx.ArToolkitContext = function(parameters) {
     }
 };
 Object.assign(ARjs.Context.prototype, THREE.EventDispatcher.prototype);
-ARjs.Context.baseURL = "https://jeromeetienne.github.io/AR.js/three.js/";
+ARjs.Context.baseURL = "../";
 ARjs.Context.REVISION = "1.5.1";
 ARjs.Context.createDefaultCamera = function(trackingBackend) {
     console.assert(false, "use ARjs.Utils.createDefaultCamera instead");
@@ -61054,7 +61063,7 @@ ARjs.Profile.prototype.reset = function() {
         sourceType: "webcam"
     };
     this.contextParameters = {
-        cameraParametersUrl: THREEx.ArToolkitContext.baseURL + "../data/data/camera_para.dat",
+        cameraParametersUrl: "../lib/camera_para.dat",
         detectionMode: "mono"
     };
     this.defaultMarkerParameters = {
@@ -62400,7 +62409,7 @@ AFRAME.registerComponent("arjs-anchor", {
             arProfile.changeMatrixMode(_this.data.changeMatrixMode);
             if (_this.data.preset === "hiro") {
                 arProfile.defaultMarkerParameters.type = "pattern";
-                arProfile.defaultMarkerParameters.patternUrl = THREEx.ArToolkitContext.baseURL + "examples/marker-training/examples/pattern-files/pattern-hiro.patt";
+                arProfile.defaultMarkerParameters.patternUrl = "../patterns/patt.hiro";
                 arProfile.defaultMarkerParameters.markersAreaEnabled = false
             } else if (_this.data.preset === "kanji") {
                 arProfile.defaultMarkerParameters.type = "pattern";

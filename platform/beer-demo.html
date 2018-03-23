@@ -1,0 +1,78 @@
+<!-- pulsing box shooting out stars -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/0.7.1/aframe.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="../build/aframe-ar.js"></script>
+<!-- <script src="https://sdk.amazonaws.com/js/aws-sdk-2.5.4.min.js"></script> -->
+<script src="prototype.js"></script>
+<script src="../lib/nipplejs.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,900' rel='stylesheet' type='text/css'>
+
+<style>
+
+.overlay {
+position: fixed; /* Sit on top of the page content */
+display: block;/* Hidden by default */
+width: 100%; /* Full width (cover the whole page) */
+height: 100%; /* Full height (cover the whole page) */
+top: 20px;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: rgba(0,0,0,0); /* Black background with opacity */
+z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+
+}</style>
+
+<body style='margin : 0px; overflow: hidden;'>
+	<a-scene embedded arjs='sourceType: webcam;'>
+
+		<!-- load beer model -->
+		<a-assets>
+	 		<a-asset-item id="corona-obj" src="../obj/corona/corona.obj"></a-asset-item>
+	 		<a-asset-item id="corona-mtl" src="../obj/corona/corona.mtl"></a-asset-item>
+ 		</a-assets>
+
+		<a-assets>
+			<a-asset-item id="pint-obj" src="../obj/pint/pint.obj"></a-asset-item>
+			<a-asset-item id="pint-mtl" src="../obj/pint/pint.mtl"></a-asset-item>
+		</a-assets>
+
+		<script>var load_model = "obj: #corona-obj; mtl: #corona-mtl"</script>
+		
+ 		<a-entity obj-model="obj: #corona-obj; mtl: #corona-mtl" scale=".1 .1 .1" rotation="-90 90 0 "></a-entity>
+		<!-- end beer model -->
+
+		<a-marker-camera id="camera"position="10 10 10" preset='hiro'></a-marker-camera>
+	</a-scene>
+
+	<!-- add overlay -->
+	<div id="np" class="overlay">
+
+	<div class="container" style="text-align:center; background: #eee;margin-bottom:10px ">
+
+	  <div class="panel panel-default" style=" font: 44px Roboto; ">
+	    <div class="panel-header">Corona Extra</div>
+	  </div>
+	</div>
+	<div class="container" style="text-align:center; background: #eee;margin-bottom:10px ">
+
+		<div class="panel panel-default" style=" font: 44px Roboto; ">
+			<div class="panel-header">Pale Lager ABV 4.5%</div>
+		</div>
+	</div>
+
+	</div>
+
+	<script>
+	var visible = 0;
+	document.addEventListener("markerFound", function(event) {console.log("marker found");})
+
+	if(visible ==1) {
+		console.log('test')
+		document.getElementById("np").setAttribute("display","block")
+	}
+	</script>
+
+
+</body>

@@ -95,7 +95,7 @@ function renderScene(d, r="VR") {
 // inits empty scene: plane and sky
 function initEmptyScene() {
   scene= document.querySelector("a-scene")
-  var sd = JSON.parse('{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"a-plane","properties":{"shadow":"true","src":"graph.jpg","position":"0 0 -4","rotation":"-90 0 0","width":"8","height":"8"}},"object2":{"name":"sky","geometry":"a-sky","properties":{"src":"../img/water.jpg"}}}}').sceneData;
+  var sd = JSON.parse('{"user":"testing","projectID":"12345","sceneData":{"object1":{"name":"floor","geometry":"a-plane","properties":{"shadow":"true","src":"graph.jpg","position":"0 0 -4","rotation":"-90 0 0","width":"8","height":"8"}},"object2":{"name":"sky","geometry":"a-sky","properties":{"src":"../img/earth.jpg"}}}}').sceneData;
   renderScene(sd)
 }
 

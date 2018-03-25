@@ -8,8 +8,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,900' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="../src/css/studio-style.css">
-<link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-<!-- <style> .lnr:hover { opacity: .7}</style> -->
+<link rel="stylesheet" type='text/css' href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+<style>
+.tap_btn {background:#fff;}
+.tap_btn span:hover {opacity: .7}
+</style>
 <body style='margin : 0px; overflow: hidden;'>
 	<a-scene embedded arjs='sourceType: webcam;'>
 
@@ -52,9 +55,9 @@
 		<!-- next button -->
 		<div  class="container" style="bottom:100px; text-align:center">
 
-				<span  onclick="nextBeer()" class="lnr lnr-pointer-up" style="font-size:40px; background:#fff;opacity:.5; height:50%"></span>
-				<span  onclick="prevBeer()" class="lnr lnr-pointer-down" style="font-size:40px; background:#fff;opacity:.5; height:50%"></span>
-				<span  onclick="nextBeer2()" class="lnr lnr-pointer-right" style="font-size:40px; background:#fff;opacity:.5; height:50%"></span>
+				<span  onclick="nextBeer()" class="lnr lnr-pointer-up tap_btn" style="font-size:40px; opacity:.5; height:50%"></span>
+				<span  onclick="prevBeer()" class="lnr lnr-pointer-down tap_btn" style="font-size:40px; opacity:.5; height:50%"></span>
+				<span  onclick="nextBeer2()" class="lnr lnr-pointer-right tap_btn" style="font-size:40px; opacity:.5; height:50%"></span>
 
 		</div>
 

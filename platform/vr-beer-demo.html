@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <title>Wiskar Platform (in progress)</title>
+    <meta name="description" content="Wiskar platform">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.5.4.min.js"></script>
+    <script src="prototype.js"></script>
+    <link rel="stylesheet" href="../src/css/studio-style.css">
+    <script src="joystick.js"></script>
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+
+
+
+<!-- experimental -->
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.rawgit.com/zcanter/aframe-gradient-sky/master/dist/gradientsky.min.js"></script>
+    <script src="../lib/nipplejs.min.js"></script>
+  </head>
+
+  <body>
+
+
+
+    <div class="col-lg-6">
+
+      <a-scene vr-mode-ui="enabled: false" >
+        <a-entity id="camera" camera="userHeight: 1.6" wasd-controls look-controls cursor="rayOrigin: mouse"></a-entity>
+        <!-- load beer assets -->
+        <a-assets>
+    	 		<a-asset-item id="corona-obj" src="../obj/corona/corona.obj"></a-asset-item>
+    	 		<a-asset-item id="corona-mtl" src="../obj/corona/corona.mtl"></a-asset-item>
+     		</a-assets>
+
+    		<a-assets>
+    			<a-asset-item id="pint-obj" src="../obj/pint/pint.obj"></a-asset-item>
+    			<a-asset-item id="pint-mtl" src="../obj/pint/pint.mtl"></a-asset-item>
+    		</a-assets>
+
+        <a-assets>
+          <a-asset-item id="pint-2-obj" src="../obj/pint-2/pint-2.obj"></a-asset-item>
+          <a-asset-item id="pint-2-mtl" src="../obj/pint-2/pint-2.mtl"></a-asset-item>
+        </a-assets>
+
+        <!-- create beer model -->
+        <a-entity id="beer" obj-model="obj: #corona-obj; mtl: #corona-mtl" position="0 0 -4" scale=".1 .1 .1" rotation="-90 90 0 "></a-entity>
+
+        <!-- end beer info -->
+      </a-scene>
+    </div>
+
+
+
+    <div class="overlay">
+      <div class="container" style="text-align:center; background: #eee;margin-bottom:10px; max-width: 90%; opacity:.5">
+          <div class="panel panel-default" style=" font: 32px Roboto; ">
+            <div id="beerName" class="panel-header">Corona Extra</div>
+          </div>
+      </div>
+      <div class="container" style="text-align:center; background: #eee;margin-bottom:10px; max-width: 70%; opacity:.5">
+            <div class="panel panel-default" style=" font: 20px Roboto; ">
+              <div id="info" class="panel-header">Pale Lager 4.5%</div>
+            </div>
+      </div>
+
+      <!-- next button -->
+    	<div  class="container" style="bottom:100px; text-align:center">
+
+    			<span id="next" onclick="nextBeer()" class="lnr lnr-pointer-up" style="font-size:40px; background:#fff;opacity:.5; height:50%"></span>
+    			<span id="prev" onclick="prevBeer()" class="lnr lnr-pointer-down" style="font-size:40px; background:#fff;opacity:.5; height:50%"></span>
+          <span id="next" onclick="nextBeer2()" class="lnr lnr-pointer-right" style="font-size:40px; background:#fff;opacity:.5; height:50%"></span>
+
+    	</div>
+
+    </div>
+
+    <div id="np" class="joystick-overlay">
+      <h1 id="data"></h1>
+
+    </div>
+
+
+  </body>
+
+
+  <script>
+  initEmptyScene()
+  function m() {
+    var newJson= '{"object3":{"name":"sphere","geometry":"a-sphere","properties":{"color":"#ff0000","position":"0 3 -4","radius":"2"}}}'
+    renderScene(JSON.parse(newJson))
+  }
+  createJoystick();
+</script>
+<script>
+function nextBeer() {
+  console.log('show next beer')
+  var scene = document.querySelector("a-scene")
+  var el = document.getElementById("beer")
+  scene.removeChild(el)
+  el = document.createElement("a-entity")
+  scene.appendChild(el)
+  el.setAttribute("id","beer")
+  el.setAttribute("obj-model","obj: #pint-obj; mtl: #pint-mtl")
+  el.setAttribute("scale",".5 .5 .5")
+  el.setAttribute("rotation", "0 0 0")
+  el.setAttribute("position","0 1.5 -4")
+  document.getElementById("beerName").innerHTML="Generic Pilsner"
+  document.getElementById("info").innerHTML="4% malty"
+}
+function nextBeer2() {
+  console.log('show next beer')
+  var scene = document.querySelector("a-scene")
+  var el = document.getElementById("beer")
+  scene.removeChild(el)
+  el = document.createElement("a-entity")
+  scene.appendChild(el)
+  el.setAttribute("id","beer")
+  el.setAttribute("obj-model","obj: #pint-2-obj; mtl: #pint-2-mtl")
+  el.setAttribute("scale",".5 .5 .5")
+  el.setAttribute("rotation", "0 0 0")
+  el.setAttribute("position","0 1.5 -4")
+  document.getElementById("beerName").innerHTML="Generic Stout"
+  document.getElementById("info").innerHTML="4% coffee flavor"
+}
+function prevBeer() {
+  var scene = document.querySelector("a-scene")
+  var el = document.getElementById("beer")
+  scene.removeChild(el)
+  el = document.createElement("a-entity")
+  scene.appendChild(el)
+  el.setAttribute("id","beer")
+
+  el.setAttribute("obj-model","obj: #corona-obj; mtl: #corona-mtl")
+  el.setAttribute("scale",".1 .1 .1")
+  el.setAttribute("rotation", "-90 90 0")
+  el.setAttribute("position","0 0 -4")
+  document.getElementById("beerName").innerHTML="Corona Extra"
+  document.getElementById("info").innerHTML="Pale Lager 4.5%"
+
+}
+
+</script>
+</div>
+
+</html>

@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <title>Wiskar Platform (in progress)</title>
+    <meta name="description" content="Wiskar platform">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="../build/aframe-ar.js"></script>
+
+  </head>
+
+  <body>
+    <canvas id="myCanvas" style="display: none" width="30" height="30">
+        <!-- Insert fallback content here -->
+    </canvas>
+    <div>
+      <a-scene embedded arjs='sourceType: webcam;'>
+        <a-marker-camera id="camera"position="10 10 10" preset='hiro'></a-marker-camera>
+
+       <!-- <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere> -->
+     </a-scene>
+    </div>
+  </body>
+</html>
+
+
+<script>
+ // create image element
+ var canvas ; var ctx ; var image ; var imageData; var numPixels; var scale = .05;
+ $(document).ready(function() {
+
+   canvas = document.getElementById("myCanvas");
+   ctx = canvas.getContext("2d");
+
+   image = new Image();
+   image.src = "clock.png";
+
+   $(image).load(function() {
+       ctx.drawImage(image, 0, 0);
+
+ // create setInterval to loop through pixels
+ imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+ numPixels = imageData.width * imageData.height;
+ i=0;
+ var id = setInterval(function() {getPix()},.1);
+ //    get pixel position
+ function getPix() {
+   if (i<numPixels) {
+     x = i % imageData.width;
+     y = imageData.height - Math.floor(i/imageData.width);
+     pos =  scale*(x -imageData.width/2) + " " +  scale*(imageData.height - y) + " 0"; //+imageData.height/2
+     r = hexColour(imageData.data[i*4])
+     // console.log(r)
+     g = hexColour(imageData.data[i*4+1])
+     b = hexColour(imageData.data[i*4+2])
+     color = "#"+r+g+b;
+     createBox(pos,color, scale)
+     i++;
+   }
+   else {
+     clearInterval(id)
+   }
+ }
+ //      convert to aframe coordinates
+ //    get pixel color
+ //    create box
+});
+});
+
+
+
+
+// convert int to hex
+function hexColour(c) {
+  zero = "0";
+
+  if (c < 256) {
+    d =  Math.abs(c).toString(16);
+    zero = "0";
+    if (d.length == 1) {
+      return zero.concat(Math.abs(c).toString(16));
+    }
+    else {
+      return Math.abs(c).toString(16);
+    }
+  }
+  return 0;
+}
+//function to create new boxes on click
+  function createBox(point, color, scale) {
+    if ((color.match(/[e-f]/g) || []).length > 1) {}
+    else {
+    scene = document.querySelector("a-scene")
+    el = document.createElement("a-box");
+    el.setAttribute('position', point)
+    el.setAttribute('shadow','true')
+    el.setAttribute('color',color)
+    el.setAttribute('metalness',0.5)
+    size = scale.toString() + " " + scale.toString() + " " + scale.toString()
+
+    el.setAttribute('scale', size)
+
+    scene.appendChild(el);
+  }
+    }
+</script>

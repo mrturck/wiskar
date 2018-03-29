@@ -4,18 +4,26 @@
 <script src="../build/aframe-ar.js"></script>
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.5.4.min.js"></script>
 <script src="prototype.js"></script>
+<script src="../lib/nipplejs.min.js"></script>
+<link rel="stylesheet" href="../src/css/studio-style.css">
+<script src="joystick.js"></script>
+
 
 
 <body style='margin : 0px; overflow: hidden;'>
 	<a-scene embedded arjs='sourceType: webcam;'>
-		<a-marker id="camera" preset='hiro'></a-marker>
-			<a-entity  position="0 0 10" camera look-controls wasd-controls></a-entity>
+		<a-marker  preset='hiro'></a-marker>
+			<a-entity  id="camera"position="0 0 10" camera look-controls wasd-controls></a-entity>
 
 	</a-scene>
+	<div id="np" class="joystick-overlay">
+	<p id="data" style="text-align: center;margin-top:40px;font-size:12px Roboto; opacity:.5">hold and drag to move</p></div>
 
 	<script>
 	// initEmptyScene()
 	fetchSceneById(973812996)
+	createJoystick()
+
 
 	</script>
 </body>

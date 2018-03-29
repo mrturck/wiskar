@@ -14,8 +14,8 @@
     </canvas>
     <div>
       <a-scene embedded arjs='sourceType: webcam;'>
-        <a-marker-camera id="camera"position="10 10 10" preset='hiro'></a-marker-camera>
-
+        <a-marker id="camera" preset='hiro'></a-marker>
+          <a-entity carmera></a-entity>
        <!-- <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere> -->
      </a-scene>
     </div>
@@ -89,7 +89,7 @@ function hexColour(c) {
   function createBox(point, color, scale) {
     if ((color.match(/[e-f]/g) || []).length > 1) {}
     else {
-    scene = document.querySelector("a-scene")
+    scene = document.querySelector("a-marker")
     el = document.createElement("a-box");
     el.setAttribute('position', point)
     el.setAttribute('shadow','true')

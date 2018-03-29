@@ -135,6 +135,7 @@ function setColor(hex) {
 
 //function to create new boxes on click
   function createBox(point, shape="a-box", color=getRandomColor(),del) {
+    scene = document.querySelector("a-marker")
     el = document.createElement(shape);
     scene.appendChild(el);
     el.setAttribute('position',point)

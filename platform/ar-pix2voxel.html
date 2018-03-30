@@ -49,9 +49,9 @@ function hexColour(c) {
     scene = document.querySelector("a-scene")
     el = document.createElement("a-box");
     el.setAttribute('position', point)
-    el.setAttribute('shadow','true')
+    el.setAttribute('shadow','false')
     el.setAttribute('color',color)
-    el.setAttribute('metalness',0.5)
+    // el.setAttribute('metalness',0.5)
     size = scale.toString() + " " + scale.toString() + " " + scale.toString()
     el.setAttribute('scale', size)
     scene.appendChild(el);
@@ -73,7 +73,7 @@ function hexColour(c) {
       }
     }
 
-AFRAME.registerComponent('hello-world', {
+AFRAME.registerComponent('build-clock', {
   tick: function (time, timeDelta) {
   for (j=0;j<20;j++) {
       getPix();
@@ -88,7 +88,7 @@ AFRAME.registerComponent('hello-world', {
       <!-- Insert fallback content here -->
   </canvas>
   <div>
-    <a-scene hello-world embedded arjs='sourceType: webcam;'>
+    <a-scene build-clock embedded arjs='sourceType: webcam;'>
       <a-marker id="camera" preset='hiro'></a-marker>
       <a-entity  id="camera"position="0 0 10" camera look-controls wasd-controls></a-entity>
      <!-- <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere> -->

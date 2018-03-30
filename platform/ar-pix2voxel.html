@@ -5,6 +5,8 @@
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="../build/aframe-ar.js"></script>
+    <link rel="stylesheet" href="../src/css/studio-style.css">
+    <script src="joystick.js"></script>
 
   </head>
 
@@ -44,7 +46,7 @@ function hexColour(c) {
 
 //function to create new boxes on click
   function createBox(point, color, scale) {
-    if ((color.match(/[e-f]/g) || []).length > 1) {}
+    if ((color.match(/[e-f]/g) || []).length > 2) {}
     else {
     scene = document.querySelector("a-scene")
     el = document.createElement("a-box");
@@ -88,9 +90,8 @@ AFRAME.registerComponent('build-clock', {
       <!-- Insert fallback content here -->
   </canvas>
   <div>
-    <a-scene build-clock embedded arjs='sourceType: webcam;'>
-      <a-marker id="camera" preset='hiro'></a-marker>
-      <a-entity  id="camera"position="0 0 10" camera look-controls wasd-controls></a-entity>
+    <a-scene joystick build-clock embedded arjs='sourceType: webcam;'>
+      <a-entity  id="camera"position="0 0 20" camera look-controls wasd-controls></a-entity>
      <!-- <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere> -->
    </a-scene>
   </div>

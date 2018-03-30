@@ -8,64 +8,22 @@
 
   </head>
 
-  <body>
-    <canvas id="myCanvas" style="display: none" width="30" height="30">
-        <!-- Insert fallback content here -->
-    </canvas>
-    <div>
-      <a-scene embedded arjs='sourceType: webcam;'>
-        <a-marker id="camera" preset='hiro'></a-marker>
-          <a-entity carmera></a-entity>
-       <!-- <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere> -->
-     </a-scene>
-    </div>
-  </body>
-</html>
 
 
 <script>
  // create image element
- var canvas ; var ctx ; var image ; var imageData; var numPixels; var scale = .05;
+ var canvas ; var ctx ; var image ; var imageData; var numPixels; var scale = 1; var i = 0;
  $(document).ready(function() {
-
    canvas = document.getElementById("myCanvas");
    ctx = canvas.getContext("2d");
-
    image = new Image();
    image.src = "clock.png";
-
    $(image).load(function() {
        ctx.drawImage(image, 0, 0);
-
- // create setInterval to loop through pixels
- imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
- numPixels = imageData.width * imageData.height;
- i=0;
- var id = setInterval(function() {getPix()},.1);
- //    get pixel position
- function getPix() {
-   if (i<numPixels) {
-     x = i % imageData.width;
-     y = imageData.height - Math.floor(i/imageData.width);
-     pos =  scale*(x -imageData.width/2) + " " +  scale*(imageData.height - y) + " 0"; //+imageData.height/2
-     r = hexColour(imageData.data[i*4])
-     // console.log(r)
-     g = hexColour(imageData.data[i*4+1])
-     b = hexColour(imageData.data[i*4+2])
-     color = "#"+r+g+b;
-     createBox(pos, color, scale)
-     i++;
-   }
-   else {
-     clearInterval(id)
-   }
- }
-
+       imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+       numPixels = imageData.width * imageData.height;
+     });
 });
-});
-
-
-
 
 // convert int to hex
 function hexColour(c) {
@@ -83,21 +41,58 @@ function hexColour(c) {
   }
   return 0;
 }
+
 //function to create new boxes on click
   function createBox(point, color, scale) {
     if ((color.match(/[e-f]/g) || []).length > 1) {}
     else {
-    scene = document.querySelector("a-marker")
+    scene = document.querySelector("a-scene")
     el = document.createElement("a-box");
     el.setAttribute('position', point)
     el.setAttribute('shadow','true')
     el.setAttribute('color',color)
     el.setAttribute('metalness',0.5)
     size = scale.toString() + " " + scale.toString() + " " + scale.toString()
-
     el.setAttribute('scale', size)
-
     scene.appendChild(el);
-  }
+      }
     }
+
+    function getPix() {
+      if (i<numPixels) {
+        x = i % imageData.width;
+        y = imageData.height - Math.floor(i/imageData.width);
+        pos =  scale*(x -imageData.width/2) + " " +  scale*(imageData.height - y) + " -4"; //+imageData.height/2
+        r = hexColour(imageData.data[i*4])
+        // console.log(r)
+        g = hexColour(imageData.data[i*4+1])
+        b = hexColour(imageData.data[i*4+2])
+        color = "#"+r+g+b;
+        createBox(pos,color, scale)
+        i++;
+      }
+    }
+
+AFRAME.registerComponent('hello-world', {
+  tick: function (time, timeDelta) {
+  for (j=0;j<20;j++) {
+      getPix();
+    }
+  }
+});
+
 </script>
+
+<body>
+  <canvas id="myCanvas" style="display: none" width="30" height="30">
+      <!-- Insert fallback content here -->
+  </canvas>
+  <div>
+    <a-scene hello-world embedded arjs='sourceType: webcam;'>
+      <a-marker id="camera" preset='hiro'></a-marker>
+      <a-entity  id="camera"position="0 0 10" camera look-controls wasd-controls></a-entity>
+     <!-- <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere> -->
+   </a-scene>
+  </div>
+</body>
+</html>

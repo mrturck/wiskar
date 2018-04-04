@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>Wiskar Platform</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button-1.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Search.css">
+    <link rel="stylesheet" href="assets/css/studio-style.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/wiskar.css">
+</head>
+
+<body><script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="../build/aframe-ar.js"></script>
+<script src="assets/js/effect.js"></script>
+    <script src="assets/js/joystick.js"></script>
+
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Navbar</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+    <button class="btn btn-primary tool" type="button" id="picker">+</button><a-scene joystick vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam;'>
+      <a-entity id="camera" camera="userHeight: 1.6" wasd-controls look-controls cursor="rayOrigin: mouse"></a-entity>
+      <a-box outline="color:#ffff00" position="-1 0.5 -3"  color="#4CC3D9"></a-box>
+      <a-sphere outline position="0 1.5 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+      <a-cylinder outline="color:#aaaaff" position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      <a-plane position="0 -.1 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+      <!-- <a-plane position="0 -.2 -4" rotation="-90 0 0" width="6" height="6" color="#fff00f"></a-plane> -->
+      <a-sky color="#dd0dd0"></a-sky>
+
+    </a-scene>
+
+    <!-- scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="assets/js/studio.js"></script>
+</body>
+
+</html>

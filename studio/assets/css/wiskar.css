@@ -1,0 +1,39 @@
+.tool {
+  position:absolute;
+  bottom:0px;
+  height:75px;
+  margin:25px;
+  width:75px;
+  border-style:none;
+  border-radius:50%;
+  display:inline-block;
+  background-color:rgb(255,92,70);
+  z-index:10;
+  box-shadow:0px 0px 20px #000;
+  font-size:28px;
+}
+
+.tool:hover {
+  color:rgb(255,255,255);
+  background-color:rgb(251, 137, 122);
+}
+
+.tool:active {
+  background-color:rgb(251, 137, 122);
+}
+
+.tool:focus {
+  box-shadow:0px 0px 20px #000;
+  background-color:rgb(251,137,122);
+  border-style:none;
+}
+
+.tool:visited {
+  background-color:rgb(251,137,122);
+}
+
+.btn-primary:not(:disabled):not(.disabled):active {
+  background-color:rgb(255,238,237);
+  color:#000000;
+}
+

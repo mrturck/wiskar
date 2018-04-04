@@ -49,7 +49,7 @@ function createJoystick() {
     x = cam.getAttribute("position")["x"] + f/15*(x_vec ) ;
     y = cam.getAttribute("position")["z"] - f/15*(y_vec ) ;
 
-    cam.setAttribute("position",x + " " + "1.6 " + y)
+    cam.setAttribute("position",x + " " + "10 " + y)
 
 
   }

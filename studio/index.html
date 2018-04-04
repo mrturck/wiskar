@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wiskar Platform</title>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
     <link rel="stylesheet" href="assets/css/Navigation-with-Button-1.css">
@@ -13,24 +15,37 @@
     <link rel="stylesheet" href="assets/css/studio-style.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/wiskar.css">
-</head>
-
-<body class="ar"><script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
     <script src="../build/aframe-ar.js"></script>
-<script src="assets/js/effect.js"></script>
+    <script src="assets/js/effect.js"></script>
     <script src="assets/js/joystick.js"></script>
-<a-scene joystick vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam;'>
+</head>
+<script>
+AFRAME.registerComponent('cursor-listener', {
+  init: function () {
+    var lastIndex = -1;
+    var COLORS = ['red', 'green', 'blue'];
+    this.el.addEventListener('mouseenter', function (evt) {
+      lastIndex = (lastIndex + 1) % COLORS.length;
+      this.setAttribute('material', 'color', COLORS[lastIndex]);
+      console.log('I was clicked at: ', evt.detail.intersection.point);
+    });
+  }
+});
+</script>
+<body class="ar">
 
-  <a-assets>
-    <a-asset-item id="tree-obj" src="../obj/tree-model/tree01.obj"></a-asset-item>
-    <a-asset-item id="tree-mtl" src="../obj/tree-model/tree01.mtl"></a-asset-item>
-  </a-assets>
+  <a-scene joystick vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam;'>
 
-  <a-assets>
-    <a-asset-item id="house-obj" src="../obj/house/house.obj"></a-asset-item>
-    <a-asset-item id="house-mtl" src="../obj/house/house.mtl"></a-asset-item>
-  </a-assets>
+    <a-assets>
+      <a-asset-item id="tree-obj" src="../obj/tree-model/tree01.obj"></a-asset-item>
+      <a-asset-item id="tree-mtl" src="../obj/tree-model/tree01.mtl"></a-asset-item>
+    </a-assets>
 
+    <a-assets>
+      <a-asset-item id="house-obj" src="../obj/house/house.obj"></a-asset-item>
+      <a-asset-item id="house-mtl" src="../obj/house/house.mtl"></a-asset-item>
+    </a-assets>
 
   <!-- <a-entity id="camera" camera="userHeight: 1.6" wasd-controls="fly: true" look-controls cursor="rayOrigin: mouse"></a-entity> -->
     <!-- set up marker -->
@@ -54,23 +69,17 @@
     <a-entity id="house" shadow="true" obj-model="obj: #house-obj; mtl: #house-mtl" position="-3 3.17 -4" rotation="0 -90 0" scale="1.5 2 1" rotation="-90 90 0 "></a-entity>
 
     <!-- street -->
-    <a-box position="0 -.1 -4" rotation="-90 0 0" scale="10 20 .1" color="#56ab5c"></a-box>
-    <!-- <a-box position="0 -.2 -4" rotation="-90 0 0" scale="10 20 .1" color="#8f6011"></a-box> -->
-    <!-- <a-box position="0 -.09 -4" rotation="-90 0 0" scale="5 20 .1" color="#262421"></a-box> -->
+    <a-box cursor-listener position="0 -.1 -4" rotation="-90 0 0" scale="10 20 .1" color="#2f7e34"></a-box>
 
-    <!-- <a-plane position="0 -.2 -4" rotation="-90 0 0" width="6" height="6" color="#fff00f"></a-plane> -->
-    <!-- <a-sky color="#dd0dd0"></a-sky> -->
+    <!-- <a-marker  preset='hiro'> -->
+      <a-entity camera id="camera" position="0 8 3" look-controls wasd-controls>
+          <a-cursor position="0 0 -1"></a-cursor>
+      </a-entity>
+    <!-- </marker> -->
 
-    <a-marker  preset='hiro'>
-      <a-entity  id="camera" position="0 5 0" camera look-controls wasd-controls></a-entity>
-    </marker>
 </a-scene>
 
-    <!-- scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-
-    <div class="overlay">
+    <div >
         <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
             <div class="container"><a class="navbar-brand" href="#">wiskar.io</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse"
@@ -78,9 +87,9 @@
                     <ul class="nav navbar-nav mr-auto"></ul><span class="navbar-text actions"> <a href="#" class="login">Log In</a><a class="btn btn-light action-button" role="button" href="#">Sign Up</a></span></div>
             </div>
         </nav>
-    </div><button class="btn btn-primary tool" type="button" id="picker">+</button>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    </div>
+    <button class="btn btn-primary tool" type="button" id="picker">+</button>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="assets/js/studio.js"></script>
 </body>

@@ -19,13 +19,18 @@
     <script src="../build/aframe-ar.js"></script>
     <script src="assets/js/effect.js"></script>
     <script src="assets/js/joystick.js"></script>
+    <script src="../platform/prototype.js"></script>
+
 </head>
 <script>
+scene = document.querySelector("a-scene")
 AFRAME.registerComponent('cursor-listener', {
   init: function () {
     var lastIndex = -1;
     var COLORS = ['red', 'green', 'blue'];
     this.el.addEventListener('mouseenter', function (evt) {
+      point = getNewPos(evt);
+      createBox(point, del);
       lastIndex = (lastIndex + 1) % COLORS.length;
       this.setAttribute('material', 'color', COLORS[lastIndex]);
       console.log('I was clicked at: ', evt.detail.intersection.point);

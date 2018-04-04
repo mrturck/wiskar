@@ -52,9 +52,6 @@ function renderScene(d, r="VR") {
       else {
         console.log("reached VR")
       el.setAttribute(propKeys[y], p[propKeys[y]])
-      // el.setAttribute("scale",".1 .1 .1") for AR
-      // console.log(propKeys[y])
-      // console.log(p[propKeys[y]])
       if (el.tagName == "A-BOX") {
 
       addClickListener(el)
@@ -135,8 +132,12 @@ function setColor(hex) {
 
 //function to create new boxes on click
   function createBox(point, shape="a-box", color=getRandomColor(),del) {
+    scene = document.querySelector("a-scene")
+
     el = document.createElement(shape);
     scene.appendChild(el);
+    el.setAttribute("cursor-listener","")
+    el.setAttribute("mirror","")
     el.setAttribute('position',point)
     el.setAttribute('scale','1 1 1')
     el.setAttribute('shadow','true')

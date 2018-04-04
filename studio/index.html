@@ -20,15 +20,51 @@
 <script src="assets/js/effect.js"></script>
     <script src="assets/js/joystick.js"></script>
 <a-scene joystick vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam;'>
-      <a-entity id="camera" camera="userHeight: 1.6" wasd-controls look-controls cursor="rayOrigin: mouse"></a-entity>
-      <a-box outline="color:#ffff00" position="-1 0.5 -3"  color="#4CC3D9"></a-box>
-      <a-sphere outline position="0 1.5 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder outline="color:#aaaaff" position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 -.1 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <!-- <a-plane position="0 -.2 -4" rotation="-90 0 0" width="6" height="6" color="#fff00f"></a-plane> -->
-      <a-sky color="#dd0dd0"></a-sky>
 
-    </a-scene>
+  <a-assets>
+    <a-asset-item id="tree-obj" src="../obj/tree-model/tree01.obj"></a-asset-item>
+    <a-asset-item id="tree-mtl" src="../obj/tree-model/tree01.mtl"></a-asset-item>
+  </a-assets>
+
+  <a-assets>
+    <a-asset-item id="apartment-obj" src="../obj/Apartment/Apartment.obj"></a-asset-item>
+    <a-asset-item id="apartment-mtl" src="../obj/Apartment/Apartment.mtl"></a-asset-item>
+  </a-assets>
+
+  <a-assets>
+    <a-asset-item id="residence-obj" src="../obj/residence/residence.obj"></a-asset-item>
+    <a-asset-item id="residence-mtl" src="../obj/residence/residence.mtl"></a-asset-item>
+  </a-assets>
+
+  <!-- <a-entity id="camera" camera="userHeight: 1.6" wasd-controls="fly: true" look-controls cursor="rayOrigin: mouse"></a-entity> -->
+    <!-- set up marker -->
+    <a-marker id="camera"position="10 10 10" preset='hiro'>
+
+    <!-- point lights -->
+    <a-sphere position="0 10.453 -6" material="emissive:#FF0;opacity:.7" geometry="" light="type:point"></a-sphere>
+    <a-sphere position="-5.935 6.972 2.2" scale="0.6 0.6 0.6" material="emissive:#dccdbb;opacity:.7" light="intensity:0.18000000000000005;color:#ff0;type:point"></a-sphere>
+    <a-sphere position="6.876 10.201 2.714" scale="0.3 0.3 0.3" material="emissive:#00ffff" light="color:#df8aa0;type:point"></a-sphere>
+
+    <!-- trees -->
+    <a-entity id="tree1" shadow="true" obj-model="obj: #tree-obj; mtl: #tree-mtl" position="4 0 2" rotation="0 90 10" scale=".01 .01 .01" rotation="-90 90 0 "></a-entity>
+    <a-entity id="tree2" shadow="true" obj-model="obj: #tree-obj; mtl: #tree-mtl" position="-4 0 3" rotation="0 70 10" scale=".008 .008 .008" rotation="-90 90 0 "></a-entity>
+    <a-entity id="tree2" shadow="true" obj-model="obj: #tree-obj; mtl: #tree-mtl" position="-4 0 0" rotation="0 70 10" scale=".012 .012 .012" rotation="-90 90 0 "></a-entity>
+
+    <a-entity id="tree3" shadow="true" obj-model="obj: #tree-obj; mtl: #tree-mtl" position="4 0 -2" rotation="0 130 0" scale=".015 .015 .015" rotation="-90 90 0 "></a-entity>
+    <a-entity id="residence" shadow="true" obj-model="obj: #residence-obj; mtl: #residence-mtl" position="3 3.17 -8" rotation="0 90 0" scale="1.5 2 1" rotation="-90 90 0 "></a-entity>
+    <a-entity id="residence" shadow="true" obj-model="obj: #residence-obj; mtl: #residence-mtl" position="-3 3.17 -4" rotation="0 -90 0" scale="1.5 2 1" rotation="-90 90 0 "></a-entity>
+
+    <!-- street -->
+    <a-box position="0 -.1 -4" rotation="-90 0 0" scale="10 20 .1" color="#56ab5c"></a-box>
+    <a-box position="0 -.2 -4" rotation="-90 0 0" scale="10 20 .1" color="#8f6011"></a-box>
+    <a-box position="0 -.09 -4" rotation="-90 0 0" scale="5 20 .1" color="#262421"></a-box>
+  </a-marker>
+    <a-entity  id="camera"position="0 0 10" camera look-controls wasd-controls></a-entity>
+
+    <!-- <a-plane position="0 -.2 -4" rotation="-90 0 0" width="6" height="6" color="#fff00f"></a-plane> -->
+    <!-- <a-sky color="#dd0dd0"></a-sky> -->
+
+</a-scene>
 
     <!-- scripts -->
     <script src="assets/js/jquery.min.js"></script>

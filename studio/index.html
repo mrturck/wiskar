@@ -5,33 +5,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wiskar Platform</title>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
     <link rel="stylesheet" href="assets/css/Navigation-with-Button-1.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Search.css">
     <link rel="stylesheet" href="assets/css/studio-style.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/wiskar.css">
-    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-    <script src="aframe-ar.js"></script>
-    <script src="assets/js/effect.js"></script>
-    <script src="assets/js/joystick.js"></script>
 </head>
 
+<body class="ar"><script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="../build/aframe-ar.js"></script>
+<script src="assets/js/effect.js"></script>
+    <script src="assets/js/joystick.js"></script>
+<a-scene joystick vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam;'>
+      <a-entity id="camera" camera="userHeight: 1.6" wasd-controls look-controls cursor="rayOrigin: mouse"></a-entity>
+      <a-box outline="color:#ffff00" position="-1 0.5 -3"  color="#4CC3D9"></a-box>
+      <a-sphere outline position="0 1.5 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+      <a-cylinder outline="color:#aaaaff" position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      <a-plane position="0 -.1 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+      <!-- <a-plane position="0 -.2 -4" rotation="-90 0 0" width="6" height="6" color="#fff00f"></a-plane> -->
+      <a-sky color="#dd0dd0"></a-sky>
 
-<body scrolling="disabled" style='margin: 0; height: 100%; overflow: hidden'>
+    </a-scene>
 
-  <a-scene embedded arjs='sourceType: webcam;' joystick vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam;'>
-    <a-entity id="camera" camera="userHeight: 1.6" wasd-controls look-controls cursor="rayOrigin: mouse"></a-entity>
-    <a-box outline="color:#ffff00" position="-1 0.5 -3"  color="#4CC3D9"></a-box>
-    <a-sphere outline position="0 1.5 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-    <a-cylinder outline="color:#aaaaff" position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-    <a-plane position="0 -.1 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-    <!-- <a-plane position="0 -.2 -4" rotation="-90 0 0" width="6" height="6" color="#fff00f"></a-plane> -->
-    <a-sky color="#dd0dd0"></a-sky>
+    <!-- scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
-  </a-scene style="max-width:100%">
-<div class="overlay">
+    <div class="overlay">
         <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
             <div class="container"><a class="navbar-brand" href="#">wiskar.io</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse"
@@ -39,10 +42,9 @@
                     <ul class="nav navbar-nav mr-auto"></ul><span class="navbar-text actions"> <a href="#" class="login">Log In</a><a class="btn btn-light action-button" role="button" href="#">Sign Up</a></span></div>
             </div>
         </nav>
-
-    <button class="btn btn-primary tool" type="button" id="picker">+</button>
-  </div>
-    <!-- scripts -->
+    </div><button class="btn btn-primary tool" type="button" id="picker">+</button>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="assets/js/studio.js"></script>
 </body>

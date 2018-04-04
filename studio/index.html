@@ -27,17 +27,17 @@
   </a-assets>
 
   <a-assets>
-    <a-asset-item id="apartment-obj" src="../obj/Apartment/Apartment.obj"></a-asset-item>
-    <a-asset-item id="apartment-mtl" src="../obj/Apartment/Apartment.mtl"></a-asset-item>
+    <a-asset-item id="house-obj" src="../obj/house/house.obj"></a-asset-item>
+    <a-asset-item id="house-mtl" src="../obj/house/house.mtl"></a-asset-item>
   </a-assets>
 
-  <a-assets>
-    <a-asset-item id="residence-obj" src="../obj/residence/residence.obj"></a-asset-item>
-    <a-asset-item id="residence-mtl" src="../obj/residence/residence.mtl"></a-asset-item>
-  </a-assets>
 
   <!-- <a-entity id="camera" camera="userHeight: 1.6" wasd-controls="fly: true" look-controls cursor="rayOrigin: mouse"></a-entity> -->
     <!-- set up marker -->
+    <a-entity id="house" shadow="" obj-model="obj:../obj/house/house.obj;mtl:../obj/house/house.mtl" position="3.446 1.706 -7.217" rotation="0 90 0" scale="3 3 3"></a-entity>
+    <a-entity id="house-4" shadow="" obj-model="mtl:../obj/house/house.mtl;obj:../obj/house/house.obj" position="3.446 1.706 -12.345" rotation="0 90 0" scale="3 3 3"></a-entity>
+    <a-entity id="house-2" shadow="" obj-model="mtl:../obj/house/house.mtl;obj:../obj/house/house.obj" position="-3.465 1.706 -3.342" rotation="0 -90 0" scale="3 3 3"></a-entity>
+    <a-entity id="house-3" shadow="" obj-model="mtl:../obj/house/house.mtl;obj:../obj/house/house.obj" position="-3.465 1.706 -8.34" rotation="0 -90 0" scale="3 3 3"></a-entity>
 
     <!-- point lights -->
     <a-sphere position="0 10.453 -6" material="emissive:#FF0;opacity:.7" geometry="" light="type:point"></a-sphere>
@@ -50,8 +50,8 @@
     <a-entity id="tree2" shadow="true" obj-model="obj: #tree-obj; mtl: #tree-mtl" position="-4 0 0" rotation="0 70 10" scale=".012 .012 .012" rotation="-90 90 0 "></a-entity>
 
     <a-entity id="tree3" shadow="true" obj-model="obj: #tree-obj; mtl: #tree-mtl" position="4 0 -2" rotation="0 130 0" scale=".015 .015 .015" rotation="-90 90 0 "></a-entity>
-    <a-entity id="residence" shadow="true" obj-model="obj: #residence-obj; mtl: #residence-mtl" position="3 3.17 -8" rotation="0 90 0" scale="1.5 2 1" rotation="-90 90 0 "></a-entity>
-    <a-entity id="residence" shadow="true" obj-model="obj: #residence-obj; mtl: #residence-mtl" position="-3 3.17 -4" rotation="0 -90 0" scale="1.5 2 1" rotation="-90 90 0 "></a-entity>
+    <a-entity id="house" shadow="true" obj-model="obj: #house-obj; mtl: #house-mtl" position="3 3.17 -8" rotation="0 90 0" scale="1.5 2 1" rotation="-90 90 0 "></a-entity>
+    <a-entity id="house" shadow="true" obj-model="obj: #house-obj; mtl: #house-mtl" position="-3 3.17 -4" rotation="0 -90 0" scale="1.5 2 1" rotation="-90 90 0 "></a-entity>
 
     <!-- street -->
     <a-box position="0 -.1 -4" rotation="-90 0 0" scale="10 20 .1" color="#56ab5c"></a-box>

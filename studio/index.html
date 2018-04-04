@@ -3,48 +3,34 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wiskar Platform</title>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
     <link rel="stylesheet" href="assets/css/Navigation-with-Button-1.css">
-    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
-    <link rel="stylesheet" href="assets/css/Navigation-with-Search.css">
     <link rel="stylesheet" href="assets/css/studio-style.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/wiskar.css">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="../build/aframe-ar.js"></script>
+    <script src="assets/js/effect.js"></script>
+    <script src="assets/js/joystick.js"></script>
 </head>
 
-<body><script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-    <script src="../build/aframe-ar.js"></script>
-<script src="assets/js/effect.js"></script>
-    <script src="assets/js/joystick.js"></script>
 
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">Navbar</a>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-      </ul>
+<body style="overflow:hidden">
+    <div>
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
+            <div class="container"><a class="navbar-brand" href="#">wiskar.io</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse"
+                    id="navcol-1">
+                    <ul class="nav navbar-nav mr-auto"></ul><span class="navbar-text actions"> <a href="#" class="login">Log In</a><a class="btn btn-light action-button" role="button" href="#">Sign Up</a></span></div>
+            </div>
+        </nav>
     </div>
-  </nav>
 
-    <button class="btn btn-primary tool" type="button" id="picker">+</button><a-scene joystick vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam;'>
+    <button class="btn btn-primary tool" type="button" id="picker">+</button><a-scene embedded arjs='sourceType: webcam;' joystick vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam;'>
       <a-entity id="camera" camera="userHeight: 1.6" wasd-controls look-controls cursor="rayOrigin: mouse"></a-entity>
       <a-box outline="color:#ffff00" position="-1 0.5 -3"  color="#4CC3D9"></a-box>
       <a-sphere outline position="0 1.5 -5" radius="1.25" color="#EF2D5E"></a-sphere>
@@ -56,11 +42,6 @@
     </a-scene>
 
     <!-- scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="assets/js/studio.js"></script>
 </body>

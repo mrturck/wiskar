@@ -8,7 +8,7 @@ d.setAttribute("id","np");
 d.setAttribute("class","joystick-overlay")
 document.querySelector("body").appendChild(d)
 var p = document.createElement("p")
-p.setAttribute("style","text-align: center;margin-top:40px;font-size:12px Roboto; opacity:.5");
+p.setAttribute("style","text-align: center;margin-top:40px;font-size:12px Roboto; opacity:.5;");
 p.innerHTML="hold and drag to move"
 d.appendChild(p)
 }
@@ -18,7 +18,8 @@ function createJoystick() {
   var options= {
     mode: 'dynamic',
     zone: document.getElementById('np'),
-    color: "#000000"
+    color: "#0F0000",
+    fadeTime: 10
   }
 
    var manager = nipplejs.create(options);

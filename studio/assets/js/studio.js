@@ -13,7 +13,7 @@ var Tap = new Hammer.Tap();
 manager.add(Press)
 manager.add(Tap)
 manager.on("press", function(ev) {
-    console.log(ev.type +" gesture detected.");
+    $("#optModal").modal();
   });
  $(".navbar-nav li a").click(function (event) {
     // check if window is small enough so dropdown is created

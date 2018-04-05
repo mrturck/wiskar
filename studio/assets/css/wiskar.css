@@ -1,3 +1,29 @@
+.modal-btn {
+  position:relative;
+  height:90px;
+  margin:25px;
+  width:90px;
+  border-style:none;
+  border-radius:50%;
+  display:inline-block;
+  color:#fff;
+  background-color:rgb(173,214,177);
+  z-index:10;
+  box-shadow:0px 0px 10px #000;
+  font-size:28px;
+}
+.modal-btn:focus {
+  box-shadow:0px 0px 30px #deb215;
+  /* background-color:rgb(251,137,122); */
+  /* border-style:none; */
+}
+.modal-btn:hover {
+  background-color:rgb(255,255,255) !important;
+  color:#000000;
+  /* border-style:none; */
+}
+
+
 .tool {
   position:absolute;
   bottom:0px;
@@ -42,4 +68,3 @@
   height:100%;
   overflow:hidden;
 }
-

@@ -14,7 +14,6 @@ manager.add(Press)
 manager.add(Tap)
 // listen to events...
 manager.on("tap press", function(ev) {
-  createBox(point);
   tap=0;
     console.log(tap)
     console.log(ev.type +" gesture detected.");

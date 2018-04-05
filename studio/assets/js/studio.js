@@ -12,10 +12,7 @@ var Press = new Hammer.Press({
 var Tap = new Hammer.Tap();
 manager.add(Press)
 manager.add(Tap)
-// listen to events...
-manager.on("tap press", function(ev) {
-  tap=0;
-    console.log(tap)
+manager.on("press", function(ev) {
     console.log(ev.type +" gesture detected.");
   });
  $(".navbar-nav li a").click(function (event) {

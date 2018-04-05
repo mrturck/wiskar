@@ -155,7 +155,8 @@ function setColor(hex) {
 function getNewPos(evt) {
   p =
   norm = evt.detail.intersection.face.normal;
-  position = evt.detail.intersection.object.parent.position;
+  position = evt.detail.intersection.point;
+  console.log(position)
 
   x = (1*norm["x"] + 1*position["x"]).toString();
   y = (1*norm["y"] + 1*position["y"]).toString();

@@ -22,22 +22,32 @@
     <script src="../platform/prototype.js"></script>
 
 </head>
+
 <script>
-scene = document.querySelector("a-scene")
+
+function createGhostBox(point, g, shape="a-box", color="#ffffff") {
+  el = document.createElement(shape);
+  el.setAttribute("cursor-listener","")
+  el.setAttribute("material","opacity:.5")
+  el.setAttribute('position',point)
+  el.setAttribute('scale','1 1 1')
+  el.setAttribute("real","false")
+  el.setAttribute("id","ghost")
+  scene.appendChild(el);
+}
+
+
 AFRAME.registerComponent('cursor-listener', {
   init: function () {
-    var lastIndex = -1;
-    var COLORS = ['red', 'green', 'blue'];
     this.el.addEventListener('mouseenter', function (evt) {
-      point = getNewPos(evt);
-      createBox(point, del);
-      lastIndex = (lastIndex + 1) % COLORS.length;
-      this.setAttribute('material', 'color', COLORS[lastIndex]);
-      console.log('I was clicked at: ', evt.detail.intersection.point);
+      scene = document.querySelector("a-scene"); point = getNewPos(evt); createGhostBox(point,"false");});
+    this.el.addEventListener('mouseleave', function (evt) {
+        scene = document.querySelector("a-scene"); ghost = document.getElementById("ghost"); scene.removeChild(ghost);});
+      console.log('place ghost')  }
     });
-  }
-});
-</script>
+
+          </script>
+
 <body class="ar">
 
   <a-scene joystick vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam;'>
@@ -70,8 +80,6 @@ AFRAME.registerComponent('cursor-listener', {
     <a-entity id="tree2" shadow="true" obj-model="obj: #tree-obj; mtl: #tree-mtl" position="-4 0 0" rotation="0 70 10" scale=".012 .012 .012" rotation="-90 90 0 "></a-entity>
 
     <a-entity id="tree3" shadow="true" obj-model="obj: #tree-obj; mtl: #tree-mtl" position="4 0 -2" rotation="0 130 0" scale=".015 .015 .015" rotation="-90 90 0 "></a-entity>
-    <a-entity id="house" shadow="true" obj-model="obj: #house-obj; mtl: #house-mtl" position="3 3.17 -8" rotation="0 90 0" scale="1.5 2 1" rotation="-90 90 0 "></a-entity>
-    <a-entity id="house" shadow="true" obj-model="obj: #house-obj; mtl: #house-mtl" position="-3 3.17 -4" rotation="0 -90 0" scale="1.5 2 1" rotation="-90 90 0 "></a-entity>
 
     <!-- street -->
     <a-box cursor-listener position="0 -.1 -4" rotation="-90 0 0" scale="10 20 .1" color="#2f7e34"></a-box>
@@ -97,6 +105,17 @@ AFRAME.registerComponent('cursor-listener', {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="assets/js/studio.js"></script>
-</body>
+    <script>
+    var h=document.getElementById("house");
+    h.addEventListener("mouseenter", function(evt) {
+        h.setAttribute("obj-model","obj: #tree-obj; mtl: #tree-mtl")
+        h.setAttribute("scale",".01 .010 .01")
+    })
+    h.addEventListener("mouseleave", function(evt) {
+      h.setAttribute("obj-model","obj:../obj/house/house.obj;mtl:../obj/house/house.mtl")
+h.setAttribute("scale","3 3 3")
+    })
 
+    </script>
+</body>
 </html>

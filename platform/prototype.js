@@ -140,7 +140,6 @@ function setColor(hex) {
     scene.appendChild(el);
     el.setAttribute('position',point)
     el.setAttribute('scale','1 1 1')
-    el.setAttribute('mirror','true')
     el.setAttribute('shadow','true')
     console.log(clr)
     if (color=="random") {

@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/wiskar.css">
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-    <!-- <script src="../build/aframe-ar.js"></script> -->
+    <script src="../build/aframe-ar.js"></script>
     <script src="assets/js/effect.js"></script>
     <script src="assets/js/joystick.js"></script>
     <script src="../platform/prototype.js"></script>
@@ -92,7 +92,9 @@
     el = document.createElement("a-entity");
     el.setAttribute('obj-model',"obj: #tree-obj; mtl: #tree-mtl")
     el.setAttribute('position',point)
-    el.setAttribute('scale','.01 .01 .01')
+    t = getRandom()*.0003;
+    console.log(t);
+    el.setAttribute('scale','.01 '+ (.01-t) + ' .01')
     el.setAttribute('rotation','0 '+getRandom()*90+ " 0")
     c = document.createElement("a-animation");
     c.setAttribute("attribute","position")
@@ -122,7 +124,11 @@
 
 <body class="ar">
   <!-- ar-scene -->
-  <a-scene build-plane joystick vr-mode-ui="enabled: false">
+  <a-scene build-plane joystick vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam;'>
+    <a-entity light="type:point; color:#7000ff" position="5.6 7.5 -3.6"></a-entity>
+    <a-entity light="type:point; color:#ffcc5b" position="-5 7.5 -10.7"></a-entity>
+    <a-entity light="type:point; color:#00ffc2" position="8 7.5 -12.7"></a-entity>
+
       <!-- load assets -->
       <a-assets>
         <a-asset-item id="tree-obj" src="../obj/tree-model/tree01.obj"></a-asset-item>
@@ -144,7 +150,7 @@
 </a-scene>
 
     <!-- html -->
-    <div>
+    <div class='overlay'>
         <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
             <div class="container"><a class="navbar-brand" href="#">wiskar.io</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse"

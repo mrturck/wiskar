@@ -1,3 +1,4 @@
+
 var picker = document.getElementById('picker');
 
 // create a simple instance
@@ -13,9 +14,11 @@ manager.add(Press)
 manager.add(Tap)
 // listen to events...
 manager.on("tap press", function(ev) {
-    console.log(ev.type +" gesture detected.");   
-     var t = document.getElementById("brand")
-    t.innerHTML="test"});
+  createBox(point);
+  tap=0;
+    console.log(tap)
+    console.log(ev.type +" gesture detected.");
+  });
  $(".navbar-nav li a").click(function (event) {
     // check if window is small enough so dropdown is created
     var toggle = $(".navbar-toggle").is(":visible");

@@ -38,7 +38,7 @@ var sh = "tree";
       });
       this.el.addEventListener('mouseleave', function (evt) {
         this.setAttribute('color','rgb(' + getRandom() + ", " + (getRandom() + 150) + ", " +  (getRandom() + 60)+")");
-        this.setAttribute('material','opacity:1');
+        this.setAttribute('material','opacity:0');
       });
     }
   });
@@ -75,7 +75,7 @@ var sh = "tree";
       b.setAttribute('scale','1 .1 1');
       b.setAttribute('cursor-listener','true')
       b.setAttribute('color','#b5d9fe')
-      // b.setAttribute('opacity','0')
+      b.setAttribute('opacity','0')
       b.setAttribute('position',(i-size/2) + " -.1 " + (j-(size)));
       c = document.createElement("a-animation");
       c.setAttribute("attribute","material.color")

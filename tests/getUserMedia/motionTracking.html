@@ -130,7 +130,7 @@ function render()
 	{
 		// mirror video
 		videoContext.drawImage( video, 0, 0, videoCanvas.width, videoCanvas.height );
-		for ( var i = 0; i < buttons.length; i++ )
+		for ( var i = 0; i < buttons.length; i++ ) {
 			layer2Context.drawImage( buttons[i].image, buttons[i].x, buttons[i].y, buttons[i].w, buttons[i].h );
 	}
 }

@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex">
+  <title>CodePen - Hello, WebRTC on Safari 11</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style> html, body{height: 100%;overflow: hidden;width: 100%;}video{left: 50%;position: absolute;transform: translate(-50%, -50%); top: 50%;}</style>
+</head>
+
+<!-- create canvas elements -->
+<body>
+
+  <canvas id="videoCanvas" width="320" height="240" style="z-index: 1; position: absolute; left:0px; top:0px;"></canvas>
+  <canvas id="layer2"     width="320" height="240" style="z-index: 2; position: absolute; left:0px; top:0px; opacity:0.5;"></canvas>
+
+  <!-- script to get video feed streaming -->
+
+</body>
+<!-- create webcam feed -->
+<script >
+  // setting getUserMedia based on browser
+  navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+  // creating video element
+  var video = document.createElement('video');
+  video.setAttribute("id","monitor");
+  video.style.width =  document.width + 'px';
+  video.style.height = document.height + 'px';
+  video.setAttribute('autoplay', '');
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+
+  // configuring video stream options
+  var facingMode = "user";
+  var constraints = {
+  audio: false,
+  video: {
+    facingMode: facingMode
+  }
+  }
+
+  // creating the video stream
+    navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+    video.srcObject = stream;
+    });
+    document.body.appendChild(video);
+</script>
+<!-- script to write webcam stream to canvas -->
+<script>
+  var video = document.getElementById( 'monitor' );
+  var videoCanvas = document.getElementById( 'videoCanvas' );
+  var videoContext = videoCanvas.getContext( '2d' );
+  var layer2Canvas = document.getElementById( 'layer2' );
+  var layer2Context = layer2Canvas.getContext( '2d' );
+
+  // these changes are permanent
+  videoContext.translate(videoCanvas.width, 0);
+  videoContext.scale(-1, 1);
+
+  video.addEventListener('play',function() {
+    setInterval(function() {
+      // draw feed
+      videoContext.drawImage(video,0,0,videoCanvas.width,videoCanvas.height)},12);
+      // draw buttons
+      for ( var i = 0; i < buttons.length; i++ ) {
+        layer2Context.drawImage( buttons[i].image, buttons[i].x, buttons[i].y, buttons[i].w, buttons[i].h );
+        }
+    },false);
+
+    // background color if no video present
+    videoContext.fillStyle = '#005337';
+    videoContext.fillRect( 0, 0, videoCanvas.width, videoCanvas.height );
+
+
+    // create buttons
+    var buttons = [];
+
+    var button1 = new Image();
+    button1.src ="SquareRed.png";
+    var buttonData1 = { name:"red", image:button1, x:320 - 96 - 30, y:10, w:32, h:32 };
+    buttons.push( buttonData1 );
+
+    var button2 = new Image();
+    button2.src ="SquareGreen.png";
+    var buttonData2 = { name:"green", image:button2, x:320 - 64 - 20, y:10, w:32, h:32 };
+    buttons.push( buttonData2 );
+
+    var button3 = new Image();
+    button3.src ="SquareBlue.png";
+    var buttonData3 = { name:"blue", image:button3, x:320 - 32 - 10, y:10, w:32, h:32 };
+    buttons.push( buttonData3 );
+
+  </script>
+
+</html>

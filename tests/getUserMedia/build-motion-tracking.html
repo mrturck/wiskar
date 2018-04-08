@@ -53,26 +53,7 @@
     });
     document.body.appendChild(video);
     // video.setAttribute("display:none","")
-    var b = document.getElementById("blendCanvas")
-    b.addEventListener('click', function() {
-      if (facingMode == "user") {
-        facingMode = "environment";
-        console.log(facingMode)
-      } else {
-        facingMode = "user";
-      }
-
-      constraints = {
-        audio: false,
-        video: {
-          facingMode: facingMode
-        }
-      }
-
-      navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-    	  video.srcObject = stream;
-      });
-    });
+  
 </script>
 <!-- script to write webcam stream to canvas -->
 <script>

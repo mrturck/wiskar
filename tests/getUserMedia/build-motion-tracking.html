@@ -54,9 +54,10 @@
     document.body.appendChild(video);
     // video.setAttribute("display:none","")
 
-    video.addEventListener('click', function() {
+    document.addEventListener('click', function() {
       if (facingMode == "user") {
         facingMode = "environment";
+        console.log(facingMode)
       } else {
         facingMode = "user";
       }
@@ -86,6 +87,7 @@
 
   // these changes are permanent
   videoContext.translate(videoCanvas.width, 0);
+  var flip =  (facingMode == "environment") ? 1 : -1;
   videoContext.scale(-1, 1);
 
   video.addEventListener('play',function() {

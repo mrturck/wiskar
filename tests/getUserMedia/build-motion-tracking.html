@@ -53,8 +53,8 @@
     });
     document.body.appendChild(video);
     // video.setAttribute("display:none","")
-
-    document.addEventListener('click', function() {
+    var b = document.getElementById("blendCanvas")
+    b.addEventListener('click', function() {
       if (facingMode == "user") {
         facingMode = "environment";
         console.log(facingMode)

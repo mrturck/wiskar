@@ -17,7 +17,7 @@
 <body>
   <canvas id="videoCanvas" style="width:100%; height:100%; z-index: 1; position: absolute;  "></canvas>
   <canvas id="layer2" style="width:100%; height:100%;z-index: 2; position: absolute;  opacity:0.5;"></canvas>
-  <canvas id="blendCanvas" style="width:100%; height:100%;z-index: 3; opacity: .3;position: relative;"></canvas>
+  <canvas id="blendCanvas" style="width:100%; height:100%;z-index: 3; opacity: .25;position: relative;"></canvas>
   <div id="messageArea" style="position: fixed; z-index: 3;left: 20px; top: 270px;">Messages will be displayed here.</div>
   <div id="messageArea2" style="position: fixed; z-index: 3;left: 20px; top: 290px;">Based on
 
@@ -91,17 +91,17 @@
 
     var button1 = new Image();
     button1.src ="SquareRed.png";
-    var buttonData1 = { name:"red", image:button1, x:320 - 96 - 30, y:100, w:40, h:40 };
+    var buttonData1 = { name:"red", image:button1, x:320 - 96 - 30, y:10, w:40, h:40 };
     buttons.push( buttonData1 );
 
     var button2 = new Image();
     button2.src ="SquareGreen.png";
-    var buttonData2 = { name:"green", image:button2, x:20, y:100, w:40, h:40 };
+    var buttonData2 = { name:"green", image:button2, x:20, y:10, w:40, h:40 };
     buttons.push( buttonData2 );
 
     var button3 = new Image();
     button3.src ="SquareBlue.png";
-    var buttonData3 = { name:"blue", image:button3, x:320 - 32 - 10, y:10, w:32, h:32 };
+    var buttonData3 = { name:"blue", image:button3, x:100, y:10, w:40, h:40 };
     buttons.push( buttonData3 );
   // script to write blended canvas and detect buttons
 

@@ -7,17 +7,18 @@
   <meta name="robots" content="noindex">
   <title>CodePen - Hello, WebRTC on Safari 11</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style> html, body{height: 100%;overflow: hidden;width: 100%;}video{left: 50%;position: absolute;transform: translate(-50%, -50%); top: 50%;}</style>
+  <style> html, body{margin:0px;height: 100%;overflow: hidden;width: 100%;}video{display:none;left: 50%;position: absolute;transform: translate(-50%, -50%); top: 50%;}</style>
 </head>
 
 <!-- create canvas elements -->
 <body>
-
-  <canvas id="videoCanvas" width="320" height="240" style="z-index: 1; position: absolute; left:0px; top:0px;"></canvas>
-  <canvas id="layer2"     width="320" height="240" style="z-index: 2; position: absolute; left:0px; top:0px; opacity:0.5;"></canvas>
+  <canvas id="videoCanvas" style="width:100%; height:100%; z-index: 1; position: absolute;  "></canvas>
+  <canvas id="layer2" style="width:100%; height:100%;z-index: 2; position: absolute;  opacity:0.5;"></canvas>
+  <canvas id="blendCanvas" style="width:100%; height:100%;z-index: 3; opacity: .3;position: relative;"></canvas>
+  <div id="messageArea" style="position: fixed; z-index: 3;left: 20px; top: 270px;">Messages will be displayed here.</div>
+  <div id="messageArea2" style="position: fixed; z-index: 3;left: 20px; top: 290px;">Based on
 
   <!-- script to get video feed streaming -->
-
 </body>
 <!-- create webcam feed -->
 <script >
@@ -27,6 +28,7 @@
   // creating video element
   var video = document.createElement('video');
   video.setAttribute("id","monitor");
+  video.setAttribute("display","none")
   video.style.width =  document.width + 'px';
   video.style.height = document.height + 'px';
   video.setAttribute('autoplay', '');
@@ -47,6 +49,8 @@
     video.srcObject = stream;
     });
     document.body.appendChild(video);
+    video.setAttribute("display:none","")
+
 </script>
 <!-- script to write webcam stream to canvas -->
 <script>
@@ -55,6 +59,9 @@
   var videoContext = videoCanvas.getContext( '2d' );
   var layer2Canvas = document.getElementById( 'layer2' );
   var layer2Context = layer2Canvas.getContext( '2d' );
+  var blendCanvas  = document.getElementById( "blendCanvas" );
+  var blendContext = blendCanvas.getContext('2d');
+
 
   // these changes are permanent
   videoContext.translate(videoCanvas.width, 0);
@@ -63,11 +70,12 @@
   video.addEventListener('play',function() {
     setInterval(function() {
       // draw feed
-      videoContext.drawImage(video,0,0,videoCanvas.width,videoCanvas.height)},12);
+      videoContext.drawImage(video,0,0,videoCanvas.width,videoCanvas.height);blend();checkAreas()},12);
       // draw buttons
       for ( var i = 0; i < buttons.length; i++ ) {
         layer2Context.drawImage( buttons[i].image, buttons[i].x, buttons[i].y, buttons[i].w, buttons[i].h );
         }
+
     },false);
 
     // background color if no video present
@@ -80,19 +88,98 @@
 
     var button1 = new Image();
     button1.src ="SquareRed.png";
-    var buttonData1 = { name:"red", image:button1, x:320 - 96 - 30, y:10, w:32, h:32 };
+    var buttonData1 = { name:"red", image:button1, x:320 - 96 - 30, y:100, w:40, h:40 };
     buttons.push( buttonData1 );
 
     var button2 = new Image();
     button2.src ="SquareGreen.png";
-    var buttonData2 = { name:"green", image:button2, x:320 - 64 - 20, y:10, w:32, h:32 };
+    var buttonData2 = { name:"green", image:button2, x:20, y:100, w:40, h:40 };
     buttons.push( buttonData2 );
 
     var button3 = new Image();
     button3.src ="SquareBlue.png";
     var buttonData3 = { name:"blue", image:button3, x:320 - 32 - 10, y:10, w:32, h:32 };
     buttons.push( buttonData3 );
+  // script to write blended canvas and detect buttons
 
-  </script>
 
+  var lastImageData;
+
+  function blend()
+  {
+  	var width  = videoCanvas.width;
+  	var height = videoCanvas.height;
+  	// get current webcam image data
+  	var sourceData = videoContext.getImageData(0, 0, width, height);
+  	// create an image if the previous image doesn't exist
+  	if (!lastImageData) lastImageData = videoContext.getImageData(0, 0, width, height);
+  	// create a ImageData instance to receive the blended result
+  	var blendedData = videoContext.createImageData(width, height);
+  	// blend the 2 images
+  	differenceAccuracy(blendedData.data, sourceData.data, lastImageData.data);
+  	// draw the result in a canvas
+  	blendContext.putImageData(blendedData, 0, 0);
+  	// store the current webcam image
+  	lastImageData = sourceData;
+  }
+
+  // creates binary canvas that paints white pixels on "motion" really cool effect
+  // styled to be invisible on the actual website
+  function differenceAccuracy(target, data1, data2)
+  {
+  	if (data1.length != data2.length) return null;
+  	var i = 0;
+  	while (i < (data1.length * 0.25))
+  	{
+  		// get average pixel color source
+  		var average1 = (data1[4*i] + data1[4*i+1] + data1[4*i+2]) / 3;
+  		// get average pixel color new
+  		var average2 = (data2[4*i] + data2[4*i+1] + data2[4*i+2]) / 3;
+  		// create binary map of different pixels
+  		var diff = threshold(fastAbs(average1 - average2));
+  		target[4*i]   = diff;
+  		target[4*i+1] = diff;
+  		target[4*i+2] = diff;
+  		target[4*i+3] = 0xFF;
+  		++i;
+  	}
+  }
+  function fastAbs(value)
+  {
+  	// bitwise operations to get ab
+  	return (value ^ (value >> 31)) - (value >> 31);
+  }
+  function threshold(value)
+  {
+  	// return white or black pixel depending on threshold
+  	return (value > 0x19) ? 0xFF : 0;
+  }
+
+  // check if white region from blend overlaps area of interest (e.g. triggers)
+  function checkAreas()
+  {
+  	for (var b = 0; b < buttons.length; b++)
+  	{
+  		// get the pixels in a note area from the blended image
+  		var blendedData = blendContext.getImageData( buttons[b].x, buttons[b].y, buttons[b].w, buttons[b].h );
+
+  		// calculate the average lightness of the blended data
+  		var i = 0;
+  		var sum = 0;
+  		var countPixels = blendedData.data.length * 0.25;
+  		while (i < countPixels)
+  		{
+  			sum += (blendedData.data[i*4] + blendedData.data[i*4+1] + blendedData.data[i*4+2]);
+  			++i;
+  		}
+  		// calculate an average between of the color values of the note area [0-255]
+  		var average = Math.round(sum / (3 * countPixels));
+  		if (average > 50) // more than 20% movement detected
+  		{
+  			console.log( "Button " + buttons[b].name + " triggered." ); // do stuff
+  			messageArea.innerHTML = "<font size='+4' color=" + buttons[b].name + "><b>Button " + buttons[b].name + " triggered.</b></font>";
+  		}
+  	}
+  }
+</script>
 </html>

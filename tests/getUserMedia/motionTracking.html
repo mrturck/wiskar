@@ -143,25 +143,32 @@ function blend()
 	var height = videoCanvas.height;
 	// get current webcam image data
 	var sourceData = videoContext.getImageData(0, 0, width, height);
-	// create an image if the previous image doesn�t exist
+	// create an image if the previous image doesn't exist
 	if (!lastImageData) lastImageData = videoContext.getImageData(0, 0, width, height);
 	// create a ImageData instance to receive the blended result
 	var blendedData = videoContext.createImageData(width, height);
 	// blend the 2 images
 	differenceAccuracy(blendedData.data, sourceData.data, lastImageData.data);
 	// draw the result in a canvas
+	console.log(blendedData)
 	blendContext.putImageData(blendedData, 0, 0);
 	// store the current webcam image
 	lastImageData = sourceData;
 }
+
+// creates binary canvas that paints white pixels on "motion" really cool effect
+// styled to be invisible on the actual website
 function differenceAccuracy(target, data1, data2)
 {
 	if (data1.length != data2.length) return null;
 	var i = 0;
 	while (i < (data1.length * 0.25))
 	{
+		// get average pixel color source
 		var average1 = (data1[4*i] + data1[4*i+1] + data1[4*i+2]) / 3;
+		// get average pixel color new
 		var average2 = (data2[4*i] + data2[4*i+1] + data2[4*i+2]) / 3;
+		// create binary map of different pixels
 		var diff = threshold(fastAbs(average1 - average2));
 		target[4*i]   = diff;
 		target[4*i+1] = diff;
@@ -172,10 +179,12 @@ function differenceAccuracy(target, data1, data2)
 }
 function fastAbs(value)
 {
+	// bitwise operations to get ab
 	return (value ^ (value >> 31)) - (value >> 31);
 }
 function threshold(value)
 {
+	// return white or black pixel depending on threshold
 	return (value > 0x15) ? 0xFF : 0;
 }
 

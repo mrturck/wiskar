@@ -83,6 +83,26 @@ video.addEventListener('click', function() {
 	  video.srcObject = stream;
   });
 });
+
+
+video.addEventListener('click', function() {
+  if (facingMode == "user") {
+    facingMode = "environment";
+  } else {
+    facingMode = "user";
+  }
+
+  constraints = {
+    audio: false,
+    video: {
+      facingMode: facingMode
+    }
+  }
+
+  navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+	  video.srcObject = stream;
+  });
+});
     </script>
 
 

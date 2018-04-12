@@ -17,10 +17,15 @@
 	<a-scene embedded arjs='sourceType: webcam;'>
 
 		<!-- load beer assets -->
-		<a-assets>
-			<a-asset-item id="corona-obj" src="../obj/corona/corona.obj"></a-asset-item>
-			<a-asset-item id="corona-mtl" src="../obj/corona/corona.mtl"></a-asset-item>
-		</a-assets>
+			<a-assets>
+    <a-asset-item id="tree" src="../obj/guinness.dae"></a-asset-item>
+  </a-assets>
+
+  <a-entity collada-model="#tree"></a-entity>
+
+
+			<!-- <a-asset-item id="corona-obj" src="../obj/corona/corona.obj"></a-asset-item> -->
+			<!-- <a-asset-item id="corona-mtl" src="../obj/corona/corona.mtl"></a-asset-item> -->
 
 		<a-assets>
 			<a-asset-item id="pint-obj" src="../obj/pint/pint.obj"></a-asset-item>

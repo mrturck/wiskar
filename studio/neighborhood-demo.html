@@ -50,7 +50,7 @@ AFRAME.registerComponent('cursor-listener', {
 
 <body class="ar">
 
-  <a-scene joystick vr-mode-ui="enabled: false" embedded arjs='sourceType: webcam;'>
+  <a-scene embedded arjs='sourceType: webcam;'>
 
     <a-assets>
       <a-asset-item id="tree-obj" src="../obj/tree-model/tree01.obj"></a-asset-item>
@@ -70,7 +70,7 @@ AFRAME.registerComponent('cursor-listener', {
 
   <!-- <a-entity id="camera" camera="userHeight: 1.6" wasd-controls="fly: true" look-controls cursor="rayOrigin: mouse"></a-entity> -->
     <!-- set up marker -->
-    <a-entity id="flower" shadow="" obj-model="obj:../obj/flower/flower.obj;mtl:../obj/flower/flower.mtl" position="3.446 1.706 -7.217" rotation="0 90 0" scale="3 3 3"></a-entity>
+    <a-entity id="house" shadow="" obj-model="mtl:../obj/house/house.mtl;obj:../obj/house/house.obj" position="3.446 1.706 -7.217" rotation="0 90 0" scale="3 3 3"></a-entity>
     <a-entity id="house-4" shadow="" obj-model="mtl:../obj/house/house.mtl;obj:../obj/house/house.obj" position="3.446 1.706 -12.345" rotation="0 90 0" scale="3 3 3"></a-entity>
     <a-entity id="house-2" shadow="" obj-model="mtl:../obj/house/house.mtl;obj:../obj/house/house.obj" position="-3.465 1.706 -3.342" rotation="0 -90 0" scale="3 3 3"></a-entity>
     <a-entity id="house-3" shadow="" obj-model="mtl:../obj/house/house.mtl;obj:../obj/house/house.obj" position="-3.465 1.706 -8.34" rotation="0 -90 0" scale="3 3 3"></a-entity>

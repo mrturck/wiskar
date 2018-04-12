@@ -19,9 +19,9 @@
   <canvas id="videoCanvas" style="width:100%; height:100%; z-index: 1; position: absolute;  "></canvas>
   <canvas id="layer2" style="width:100%; height:100%;z-index: 2; position: absolute;  opacity:0.5;"></canvas>
   <canvas id="blendCanvas" style="width:100%; height:100%;z-index: 3; opacity: .3;position: relative;"></canvas>
-  <!-- <div id="messageArea" style="position: fixed; z-index: 3;left: 20px; top: 270px;">Messages will be displayed here.</div>
-  <div id="messageArea2" style="position: fixed; z-index: 3;left: 20px; top: 290px;">Based on
- -->
+  <div id="messageArea" style="position: fixed; z-index: 30;left: 20px; top: 270px;">Messages will be displayed here.</div>
+  <div id="messageArea2" style="position: fixed; z-index: 30;left: 20px; top: 290px;">Based on
+
   <!-- script to get video feed streaming -->
 </body>
 <a-scene><a-scene>
@@ -41,7 +41,7 @@
   video.setAttribute('playsinline', '');
 
   // configuring video stream options
-  var facingMode = "user";
+  var facingMode = "environment";
   var constraints = {
   audio: false,
   video: {
@@ -183,9 +183,12 @@
   		if (average > 50) // more than 20% movement detected
   		{
   			console.log( "Button " + buttons[b].name + " triggered." ); // do stuff
-  			messageArea.innerHTML = "<font size='+4' color=" + buttons[b].name + "><b>Button " + buttons[b].name + " triggered.</b></font>";
-  		}
+  			// messageArea.innerHTML = "<font size='+4' color=" + buttons[b].name + "><b>Button " + buttons[b].name + " triggered.</b></font>";
+
+      }
   	}
   }
+  s = document.querySelector("a-scene")
+  document.addEventListener("click",function() {s.enterVR()})
 </script>
 </html>

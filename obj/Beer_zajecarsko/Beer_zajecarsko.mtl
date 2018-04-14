@@ -1,0 +1,9 @@
+# OBJ Material Export by Luxion KeyShot
+
+newmtl Brass Polished
+Kd 0.999999 0.000983667 0.000987089
+Ks 0 0 0
+
+newmtl Glass Basic Red #3
+Kd 0 0 0
+Ks 1 1 1

@@ -1,0 +1,49 @@
+# Blender MTL File: 'beerbottle_belgian.blend'
+# Material Count: 5
+
+newmtl bottle_beer
+Ns 96.078431
+Ka 1 1 1
+Kd 0.001709 0.088550 0.007914
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl bottle_cap
+Ns 96.078431
+Ka 1 1 1
+Kd 0.640000 0.507024 0.138289
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl bottle_glass
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.088550 0.056164 0.014134
+Ks .7 .7 .7
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl bottle_logo_back
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd .45 .45 .45
+Ks 1 1 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd logo_belgian_ros_back.png
+
+newmtl bottle_logo_front
+Ns 96.078431
+Ka .3 .3 0.000000
+Kd 0.45 0.45 0.45
+Ks 0.500000 1 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd logo_belgian_ros_front.png
